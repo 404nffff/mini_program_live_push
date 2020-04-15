@@ -1,0 +1,18 @@
+{
+  "pages": [
+    "pages/live-pusher/push-config/push-config",
+    "pages/live-pusher/push"
+  ],
+  "networkTimeout": {
+    "request": 60000
+  },
+  "window": {
+    "backgroundColor": "#888",
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#409EFF",
+    "navigationBarTitleText": "直播工具",
+    "navigationBarTextStyle": "black",
+    "navigationStyle": "custom"
+  },
+  "sitemapLocation": "sitemap.json"
+}
