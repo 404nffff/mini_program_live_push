@@ -1,5 +1,48 @@
 /* pages/push/push.wxss */
+.shop {
+  color: #fff;
+  position: fixed;
+  top: 20px;
+  left: 18px;
+  width:300px;
+  height: 60px;
+}
+.shopName {
+  position: relative;
+  width: 63%;
+  /* // padding: 11px 0 25px; */
+  height: 60px;
+  background: #ffffff;
+  opacity: 0.5;
+  border-radius: 45px;
+}
 
+.logo {
+  position: absolute;
+  left: 11px;
+  width: 50px;
+  height: 50px;
+  top: 5px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.logo img {
+  width: 100%;
+}
+.logoName {
+  position: absolute;
+  left: 70px;
+  top: 13px;
+  color: #000;
+  max-width: 193px;
+}
+.logoName .first {
+  font-size: 12px;
+}
+.logoName .second {
+  margin-top: 10px;
+  font-size: 12px;
+}
 .bottom_box
 {
   position: relative;
@@ -22,13 +65,22 @@
   opacity:0.55;
 }
 
+.bottom_icon
+{
+  width: 34px; 
+  height: 34px;
+  display:inline-block;
+  position: absolute;
+  top: 8px;
+  left: 8px;
+}
 .bottom_text
 {
   position: absolute;
   display:inline-block;
   color: #ffffff;
   width: 100%;
-  font-size:10px;
+  font-size:12px;
   bottom: 0;
   text-align: center;
 }
@@ -54,4 +106,33 @@
   top: 80px;
   right: 10px;
   text-align: left;
+}
+
+.danmu_list {
+  width:90%; 
+  position:absolute;
+  bottom:130px;
+  left: 10px;
+  border: 1px solid #ccc;
+  color: #fff;
+  font-size: 14px;
+}
+.danme_item {
+  border: 1px solid #ccc;
+  color: #000;
+  font-size: 14px;
+  height: auto;
+  width: 200px;
+  padding: 5px 10px;
+  word-break: break-all;word-wrap:break-word;white-space:pre-line;
+  margin: 10px;
+  background: #fff;
+  opacity: 0.5;
+  border-radius: 45px;
+}
+
+.danmu_name {
+  float: left;
+}
+.danmu_content {
 }

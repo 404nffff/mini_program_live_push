@@ -3,55 +3,79 @@
   <view class='title' style='padding-top:{{(headerHeight + statusBarHeight)/2 - 12}}px'>
     <text>RTMP推流</text>
   </view>
-  <view class='item' style='padding-top:2vh'>
-    <text class='item-title'>推流获取</text>
-    <van-button type="default" bindtap="onScanQR"  size="small">扫码读取</van-button>
-    <text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;</text>
-    <van-button type="default" bindtap="onNewUrlClick"  size="small">自动生成</van-button>
-  </view>
+  <view class="form">
 
-  <view class='item'>
-    <text class='item-title'>推流地址</text>
-    <input class='item-input' placeholder="rtmp://" focus="{{focusPush}}" bindtap='onPushInputTap' bindinput="onPushInputChange" value="{{pushUrl}}"></input>
-    <image class='item-image' bindtap="onCopyPushUrl" src='/pages/Resources/copy.png'></image>
-  </view>
+    <van-row>
+      <van-col span="4" custom-class="item-title" offset="1">推流获取</van-col>
+      <van-col span="18" custom-class="item">
+          <text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;</text>
+          <van-button bindtap="onScanQR"  size="small" color="#0059BF">扫码读取</van-button>
+          <text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;</text>
+          <van-button bindtap="onNewUrlClick"  size="small" plain color="#0059BF">自动生成</van-button>
+      </van-col>
+      <van-col span="23" offset="1"><view class="line"></view></van-col>
+    </van-row>
 
-  <view class='item'>
-    <text class='item-title'>播放地址</text>
-    <input class='item-input' placeholder="http://" focus="{{focusPlay}}" bindtap='onPlayInputTap' bindinput="onPlayInputChange" value="{{playUrl}}"></input>
-    <image class='item-image' bindtap="onCopyPlayUrl" src='/pages/Resources/copy.png'></image>
-  </view>
+     <van-row>
+      <van-col span="4" custom-class="item-title" offset="1">推流地址</van-col>
+      <van-col span="15" custom-class='item'>
+        <van-field placeholder="rtmp://" bind:focus="{{focusPush}}" bind:input='onPushInputTap' bind:change="onPushInputChange" value="{{pushUrl}}" border="{{ false }}" autosize />
+      </van-col>
+      <van-col span="3" custom-class='item'>
+          <image class='item-image' bindtap="onCopyPushUrl" src='/pages/Resources/copy.png'></image>
+      </van-col>
+      <van-col span="23" offset="1"><view class="line"></view></van-col>
+    </van-row>
 
-  <view class='item'>
-    <text class='item-title'>画面质量</text>
-    <radio-group class="radio-group" bindchange="modeRadioChange">
-      <label class="radio" wx:for="{{modeItems}}" wx:key="" class="{{mode == item.value ? 'bc_blue white': 'blue'}}">
-        <radio value="{{item.value}}" checked="{{item.checked}}" /> {{item.title}}
-      </label>
-    </radio-group>
-  </view>
+     <van-row>
+      <van-col span="4" custom-class="item-title" offset="1">播放地址</van-col>
+      <van-col span="15" custom-class='item'>
+        <van-field  placeholder="http://" focus="{{focusPlay}}" bindtap='onPlayInputTap' bindinput="onPlayInputChange" value="{{playUrl}}" border="{{ false }}" autosize/>
+      </van-col>
+      <van-col span="3" custom-class='item'>
+          <image class='item-image' bindtap="onCopyPlayUrl" src='/pages/Resources/copy.png'></image>
+      </van-col>
+      <van-col span="23" offset="1"><view class="line"></view></van-col>
+    </van-row>
 
-  <view class='item'>
-    <text class='item-title'>画面方向</text>
-    <radio-group class="radio-group" bindchange="orientationRadioChange">
-      <label class="radio" wx:for="{{orientationItems}}" wx:key="" class="{{orientation == item.value ? 'bc_blue white': 'blue'}}">
-        <radio value="{{item.value}}" checked="{{item.checked}}" /> {{item.title}}
-      </label>
-    </radio-group>
-  </view>
+     <van-row>
+      <van-col span="4" custom-class="item-title" offset="1">画面质量</van-col>
+      <van-col span="15" custom-class='item'>
+        <radio-group class="radio-group" bindchange="modeRadioChange">
+          <label class="radio" wx:for="{{modeItems}}" wx:key="i" class="{{mode == item.value ? 'bc_blue white': 'blue'}}">
+            <radio value="{{item.value}}" checked="{{item.checked}}" /> {{item.title}}
+          </label>
+        </radio-group>
+      </van-col>
+      <van-col span="23" offset="1"><view class="line"></view></van-col>
+    </van-row>
 
-  <view class='item'>
-    <text class='item-title'>仅推声音</text>
-    <switch class='item-switch' checked="{{!enableCamera}}" bindchange="switchChange" />
+     <van-row>
+      <van-col span="4" custom-class="item-title" offset="1">画面方向</van-col>
+      <van-col span="18" custom-class='item'>
+          <radio-group class="radio-group" bindchange="orientationRadioChange">
+          <label class="radio" wx:for="{{orientationItems}}" wx:key="i" class="{{orientation == item.value ? 'bc_blue white': 'blue'}}">
+            <radio value="{{item.value}}" checked="{{item.checked}}" /> {{item.title}}
+          </label>
+        </radio-group>
+      </van-col>
+      <van-col span="23" offset="1"><view class="line"></view></van-col>
+    </van-row>
+
+     <van-row>
+      <van-col span="4" custom-class="item-title" offset="1">仅推声音</van-col>
+      <van-col span="18" custom-class='item'>
+          <van-switch checked="{{!enableCamera}}" bind:change="switchChange" active-color="#0059BF" custom-class="item-switch"/>
+      </van-col>
+    </van-row>
   </view>
 </view>
 
 <view class='start-box'>
-  <button class='start' bindtap="startPush" src='/pages/Resources/logo.png'>开始</button>
+  <button class='start' bindtap="startPush">   
+    开始
+  </button>
 </view>
 
-<view class='logo-box'>
-  <image class='logo' src='/pages/Resources/logo.png'></image>
-</view>
-
-<cover-image class='close' style="top:{{(headerHeight + statusBarHeight) - 26}}rpx" src="/pages/Resources/back.png" bindtap="onBack"></cover-image>
+<!-- 
+<cover-image class='close' style="top:{{(headerHeight + statusBarHeight) - 26}}rpx" src="/pages/Resources/back.png" bindtap="onBack"></cover-image> -->

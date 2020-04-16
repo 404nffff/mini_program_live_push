@@ -88,7 +88,7 @@ body, page {
   font-size: 16px;
   text-align: center;
   padding: 10vw 0 5vw;
-  background: #001938;
+  background: #0059BF;
 }
 .tips {
   color: #ffffff;

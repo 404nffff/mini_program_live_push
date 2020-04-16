@@ -8,11 +8,10 @@ Page({
    */
   data: {
     modeItems: [
-      { value: 'SD', title: 'SD'},
-      { value: 'HD', title: 'HD'},
-      { value: 'FHD', title: 'FHD'},
+      { value: '480p', title: '480p'},
+      { value: '720p', title: '720p'},
     ],
-    mode :'SD',
+    mode :'720p',
     orientationItems: [
       { value: 'vertical', title: '竖屏推流' },
       { value: 'horizontal', title: '横屏推流' },
@@ -24,16 +23,20 @@ Page({
     tapTime: '',		// 防止两次点击操作间隔太快
     headerHeight: app.globalData.headerHeight,
     statusBarHeight: app.globalData.statusBarHeight,
+    pushUrl:''
   },
 
-  onPushInputTap: function () {
+  onPushInputTap: function (e) {
     this.setData({
-      focusPush: true
+      focusPush: true,
+      pushUrl: e.detail
     })
   },
   onPushInputChange: function (e) {
+
     this.setData({
-      pushUrl: e.detail.value,
+      focusPush: true,
+      pushUrl: e.detail
     })
   },
   onPlayInputTap: function () {
@@ -43,7 +46,7 @@ Page({
   },
   onPlayInputChange: function (e) {
     this.setData({
-      playUrl: e.detail.value,
+      playUrl: e.detail,
     })
   },
   modeRadioChange: function (e) {
@@ -58,7 +61,7 @@ Page({
   },
   switchChange: function (e) {
     this.setData({
-      enableCamera: !e.detail.value
+      enableCamera: !e.detail
     });
   },
   onScanQR: function () {
@@ -129,7 +132,7 @@ Page({
     //   });
     //   return;
     // }
-    var url = '/pages/live-pusher/push?pushUrl=' + encodeURIComponent(self.data.pushUrl) + '&mode=' + self.data.mode + '&orientation=' + self.data.orientation + '&enableCamera=' + self.data.enableCamera;
+    var url = '/pages/live-pusher/push?pushUrl=' + encodeURIComponent(self.data.pushUrl) + '@' + self.data.mode + '&orientation=' + self.data.orientation + '&enableCamera=' + self.data.enableCamera;
     console.log(url);
     wx.navigateTo({
       url: url
@@ -189,9 +192,9 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  // onShareAppMessage: function () {
 
-  },
+  // },
   onBack: function () {
     wx.navigateBack({
       delta: 1

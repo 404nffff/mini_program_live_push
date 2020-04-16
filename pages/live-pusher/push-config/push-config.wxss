@@ -1,5 +1,5 @@
 /* pages/push-config/push-config.wxss */
-.item {
+/* .item {
   width:88vw;
   height:30px;
   padding-left: 6vw;
@@ -8,13 +8,27 @@
   display:flex;
   flex-flow: row;
   align-items:center;
+} */
+
+.form{
+  margin: 10px auto;
+  width:95%;
+  background: #fff;
 }
 
+
+.line {
+  border-bottom: 1px solid #f7f8fa;
+  height: 1px;
+}
 .item-title {
-  width:20vw;
-  height:20px;
   font-size: 14px;
   color: #000000;
+  line-height: 44px;
+}
+
+.item {
+  line-height: 38px;
 }
 
 .item-button1 {
@@ -22,7 +36,6 @@
   width:23vw;
   height:30px;
   padding: 0 0 0 ;
-  margin-left: 2vw;
   margin-right: 2vw;
   font-size: 14px;
   color: #000000;
@@ -30,31 +43,29 @@
   align-items: center;
 }
 
-.item-input {
-  width:50vw;
-  height:30px;
-  margin-left: 2vw;
-  font-size: 14px;
-  color: #000000;
-  background-color: #ffffff; 
-  border-radius:8rpx;
-}
 
 .item-image {
-  margin-left: 3vw;
-  width:10vw;
-  height:10vw;
+  width:15px;
+  height:15px;
+  padding: 5px;
+  border: 1px solid #e6e6e6;
+  border-radius: 10vh;
+  box-shadow: 0px 0px 5px 1px #e6e6e6; 
+  position: relative;
+  top: 8px;
 }
 
 .radio-group {
   background-color:white;
   display: flex;
   width: 50vw;
-  margin-left: 2vw;
   text-align: center;
   font-size: 14px;
-  border: 1px solid #0076FF;
+  border: 1px solid #0059BF;
   border-radius: 5px;
+  height:30px;
+  line-height: 25px;
+  margin: 6px 0 0 15px;
 }
 
 .radio-group radio {
@@ -62,11 +73,11 @@
 }
 
 .blue{
-  color: #0076FF;
+  color: #0059BF;
 }
 
 .bc_blue{
-  background-color: #0076FF;
+  background-color: #0059BF;
 }
 
 .white {
@@ -77,7 +88,7 @@ label {
   text-align: center;
   padding: 3px 0;
   flex: 1;
-  border-right: 1px solid #0076FF;
+  border-right: 1px solid #0059BF;
 }
 
 label:last-child {
@@ -85,7 +96,7 @@ label:last-child {
 }
 
 .item-switch {
-   margin-left: 2vw;
+  margin: 6px 0 0 15px;
 }
 
 .start-box {
@@ -100,8 +111,10 @@ label:last-child {
   width: 20vh;
   height: 20vh;
   font-size: 20px;
-  color: #0080FF;
+  color: #0059BF;
   border-radius: 10vh;
   justify-content: center;
   align-items: center;
+  border: #0059BF 1px solid;
+  background: #fff;
 }

@@ -1,5 +1,6 @@
 // pages/push/push.js
-const app = getApp()
+const app = getApp();
+
 Page({
 
   /**
@@ -19,6 +20,21 @@ Page({
     debug: false,
     headerHeight: app.globalData.headerHeight,
     statusBarHeight: app.globalData.statusBarHeight,
+    danmulist: [
+      { uname: "杨茂元", text: "秒杀的活动还有吗", color: "blue" },
+      {
+        uname: "杨茂元",
+        text: "秒杀的活动还有吗 什么时候结束啊，还有没有优惠啊",
+        color: ""
+      },
+      { uname: "杨茂元", text: "秒杀的活动还有吗", color: "" },
+      {
+        uname: "杨茂元",
+        text: "秒杀的活动还有吗 什么时候结束啊，还有没有优惠啊",
+        color: ""
+      },
+      { uname: "杨茂元", text: "秒杀的活动还有吗", color: "" }
+    ]
   },
   onSwitchCameraClick: function () {
     this.data.frontCamera = !this.data.frontCamera;
@@ -52,16 +68,49 @@ Page({
     })
   },
   onPushEvent: function (e) {
-    console.log(e.detail.code);
 
+    let self = this;
     if (e.detail.code == -1307) {
-      this.stop();
       wx.showToast({
         title: '推流多次失败',
+        icon: 'fail',
+        duration: 1000,
+        success:() =>{
+          self.stop();
+        }
       })
     }
   },
 
+  onStop:function(e) {
+
+    this.list.push({ uname: "杨茂元：", text: '123', color: colors[b], flag });
+
+    // let self = this;
+    // wx.showModal({
+    //   title: '提示',
+    //   content: '是否确认关闭直播间',
+    //   confirmColor:'#0059BF',
+    //   success (res) {
+    //     if (res.confirm) {
+    //       //console.log('用户点击确定')
+
+    //       wx.showToast({
+    //         title: '直播间已关闭',
+    //         icon: 'success',
+    //         duration: 1000,
+    //         success:() =>{
+    //           self.stop();
+    //         }
+    //       })
+
+    //     } else if (res.cancel) {
+    //       console.log('用户点击取消')
+    //     }
+    //   }
+    // })
+    
+  },
   stop: function () {
     this.setData({
       playing: false,
@@ -76,6 +125,9 @@ Page({
       debug: false
     })
     this.data.cameraContext.stop();
+    wx.redirectTo({
+      url: '/pages/live-pusher/push-config/push-config'
+    })
   },
 
   createContext: function () {
@@ -116,6 +168,8 @@ Page({
    */
   onShow: function () {
     console.log("onLoad onShow");
+
+    
     // 保持屏幕常亮
     wx.setKeepScreenOn({
       keepScreenOn: true

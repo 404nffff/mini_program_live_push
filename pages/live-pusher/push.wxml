@@ -1,29 +1,24 @@
 <!--pages/push/push.wxml-->
 <view style="width:100%;height: 100%; background-color: black;">
   <view style="width:100%;height:100%;">
-    <live-pusher style="width:100%; height: 100%;" id="camera-push" mode="{{mode}}" orientation="{{orientation}}" beauty="{{beauty}}" whiteness="{{whiteness}}" muted="{{muted}}" waiting-image="https://mc.qcloudimg.com/static/img/daeed8616ac5df256c0591c22a65c4d3/pause_publish.jpg" background-mute="{{backgroundMute}}" url="{{pushUrl}}" enable-camera="{{enableCamera}}" debug="{{debug}}" hidden="{{hide}}" bindstatechange="onPushEvent">
-
-     
-      <cover-view class='peonum_text'>人数：123</cover-view>
-
-
-
-       <!-- 弹幕 -->
-      <cover-view style="width:100%; height: 300px; position:absolute;bottom:250px;">
-        <cover-view class='danmu_text'>翻转asdasdadasdasdasd</cover-view>
+    <!-- <live-pusher style="width:100%; height: 100%;" id="camera-push" mode="{{mode}}" orientation="{{orientation}}" beauty="{{beauty}}" whiteness="{{whiteness}}" muted="{{muted}}" waiting-image="/pages/Resources/waiting.jpg" background-mute="{{backgroundMute}}" url="{{pushUrl}}" enable-camera="{{enableCamera}}" debug="{{debug}}" hidden="{{hide}}" bindstatechange="onPushEvent"> -->
+    
+      <cover-view class="shop">
+      <cover-view class="shopName">
+        <cover-view class="logo">
+          <cover-image
+            src="http://nuomasource.oss-cn-beijing.aliyuncs.com/rEuUtazecR20190916115004.jpg"
+            alt
+          />
+        </cover-view>
+        <cover-view class="logoName">
+          <cover-view class="first">爱拼有家 有你才会赢</cover-view>
+          <cover-view class="second">
+            2000人观看
+          </cover-view>
+        </cover-view>
       </cover-view>
-       <cover-view style="width:100%; height: 300px; position:absolute;bottom:220px;">
-        <cover-view class='danmu_text'>翻转asdasdadasdasdasd</cover-view>
-      </cover-view>
-       <cover-view style="width:100%; height: 300px; position:absolute;bottom:190px;">
-        <cover-view class='danmu_text'>翻转asdasdadasdasdasd</cover-view>
-      </cover-view>
-       <cover-view style="width:100%; height: 300px; position:absolute;bottom:160px;">
-        <cover-view class='danmu_text'>翻转asdasdadasdasdasd</cover-view>
-      </cover-view>
-       <cover-view style="width:100%; height: 300px; position:absolute;bottom:130px;">
-        <cover-view class='danmu_text'>翻转asdasdadasdasdasd</cover-view>
-      </cover-view>
+    </cover-view>
 
       <!-- 水平方向的按钮 -->
       <cover-view style="width:100%; height: 70px; position:absolute;bottom:30px;">
@@ -40,11 +35,22 @@
           <cover-view class='bottom_text'>禁音</cover-view>
         </cover-view>
         <cover-view class='bottom_box'>
-          <cover-image class="bottom_button" src="/pages/Resources/{{debug?'log':'log2'}}.png" bindtap='onLogClick'></cover-image>
-          <cover-view class='bottom_text'>日志</cover-view>
+          <!-- <cover-view class="bottom_icon"><van-icon name="stop-circle" color="#fff" size="38px" bindtap="onStop"/></cover-view> -->
+          <cover-image class="bottom_icon" src="/pages/Resources/close.png" bindtap='onStop'></cover-image>
+          <cover-view class='bottom_text'>关播</cover-view>
         </cover-view>
       </cover-view>
-      <cover-image class='close' style="top:{{(headerHeight + statusBarHeight) - 26}}rpx" src="/pages/Resources/back.png" bindtap="onBack"></cover-image>
-    </live-pusher>
+      <!-- <cover-image class='close' style="top:{{(headerHeight + statusBarHeight) - 26}}rpx" src="/pages/Resources/back.png" bindtap="onBack"></cover-image> -->
+    <!-- </live-pusher> -->
+  </view>
+</view>
+
+<!-- 弹幕 -->
+<view class="danmu_list">
+  <view  wx:for="{{danmulist}}" wx:key="unique">
+    <view class="danme_item">
+      <view class="danmu_name">{{item.uname}} :</view>
+      <view class="danmu_content">{{item.text}}</view>
+    </view>
   </view>
 </view>
