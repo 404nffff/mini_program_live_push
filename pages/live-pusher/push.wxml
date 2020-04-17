@@ -1,7 +1,7 @@
 <!--pages/push/push.wxml-->
 <view style="width:100%;height: 100%; background-color: black;">
   <view style="width:100%;height:100%;">
-    <!-- <live-pusher style="width:100%; height: 100%;" id="camera-push" mode="{{mode}}" orientation="{{orientation}}" beauty="{{beauty}}" whiteness="{{whiteness}}" muted="{{muted}}" waiting-image="/pages/Resources/waiting.jpg" background-mute="{{backgroundMute}}" url="{{pushUrl}}" enable-camera="{{enableCamera}}" debug="{{debug}}" hidden="{{hide}}" bindstatechange="onPushEvent"> -->
+    <live-pusher style="width:100%; height: 100%;" id="camera-push" mode="{{mode}}" orientation="{{orientation}}" beauty="{{beauty}}" whiteness="{{whiteness}}" muted="{{muted}}" waiting-image="/pages/Resources/waiting.jpg" background-mute="{{backgroundMute}}" url="{{pushUrl}}" enable-camera="{{enableCamera}}" debug="{{debug}}" hidden="{{hide}}" bindstatechange="onPushEvent">
     
       <cover-view class="shop">
       <cover-view class="shopName">
@@ -21,7 +21,7 @@
     </cover-view>
 
       <!-- 水平方向的按钮 -->
-      <cover-view style="width:100%; height: 70px; position:absolute;bottom:30px;">
+      <cover-view style="" class="bottom_box_list">
         <cover-view class='bottom_box'>
           <cover-image class="bottom_button" src="/pages/Resources/camera.png" bindtap='onSwitchCameraClick'></cover-image>
           <cover-view class='bottom_text'>翻转</cover-view>
@@ -41,16 +41,18 @@
         </cover-view>
       </cover-view>
       <!-- <cover-image class='close' style="top:{{(headerHeight + statusBarHeight) - 26}}rpx" src="/pages/Resources/back.png" bindtap="onBack"></cover-image> -->
-    <!-- </live-pusher> -->
-  </view>
-</view>
-
-<!-- 弹幕 -->
-<view class="danmu_list">
+    </live-pusher>
+    <!-- 弹幕 -->
+<scroll-view class="danmu_list" scroll-y="true" scroll-top="{{scrollTop}}" scroll-with-animation="true">
   <view  wx:for="{{danmulist}}" wx:key="unique">
     <view class="danme_item">
-      <view class="danmu_name">{{item.uname}} :</view>
+      <view class="danmu_name">{{item.uname}}</view>
+      <view class="danmu_marks">:</view>
       <view class="danmu_content">{{item.text}}</view>
     </view>
   </view>
+</scroll-view>
+
+  </view>
 </view>
+

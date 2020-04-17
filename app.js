@@ -13,10 +13,17 @@ App({
     }
     this.globalData.headerHeight = headHeight;
     this.globalData.statusBarHeight = statusBarHeight;
+
+
+
+  },
+  onReady:() => {
+    
   },
   globalData: {
     userInfo: null,
     headerHeight : 0,
-    statusBarHeight : 0
+    statusBarHeight : 0,
+    websocketUrl:'ws://192.168.22.186:9501?roomId=abcd',
   }
 })

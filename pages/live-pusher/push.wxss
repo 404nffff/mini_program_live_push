@@ -2,27 +2,27 @@
 .shop {
   color: #fff;
   position: fixed;
-  top: 20px;
-  left: 18px;
-  width:300px;
-  height: 60px;
+  top: 60rpx;
+  left: 36rpx;
+  width:640rpx;
+  height: 120rpx;
 }
 .shopName {
   position: relative;
   width: 63%;
   /* // padding: 11px 0 25px; */
-  height: 60px;
-  background: #ffffff;
+  height: 120rpx;
+  background:rgba(0,0,0,.5);
   opacity: 0.5;
-  border-radius: 45px;
+  border-radius: 90rpx;
 }
 
 .logo {
   position: absolute;
-  left: 11px;
-  width: 50px;
-  height: 50px;
-  top: 5px;
+  left: 22rpx;
+  width: 100rpx;
+  height: 100rpx;
+  top: 10rpx;
   border-radius: 50%;
   overflow: hidden;
 }
@@ -31,25 +31,31 @@
 }
 .logoName {
   position: absolute;
-  left: 70px;
-  top: 13px;
-  color: #000;
-  max-width: 193px;
+  left: 140rpx;
+  top: 26rpx;
+  color: #fff;
+  max-width: 396rpx;
 }
 .logoName .first {
-  font-size: 12px;
+  font-size: 24rpx;
 }
 .logoName .second {
-  margin-top: 10px;
-  font-size: 12px;
+  margin-top: 20rpx;
+  font-size: 24rpx;
+}
+.bottom_box_list{
+  width:100%;
+  height: 140rpx; 
+  position:absolute;
+  bottom:60rpx;
 }
 .bottom_box
 {
   position: relative;
-  width: 50px; 
-  height: 70px; 
-  margin-left:calc(100% / 8 - 25px); 
-  margin-right:calc(100% / 8 - 25px);
+  width: 100rpx; 
+  height: 140rpx; 
+  margin-left:calc(100% / 8 - 50rpx); 
+  margin-right:calc(100% / 8 - 50rpx);
   display:inline-block;
 }
 
@@ -57,8 +63,8 @@
 {
   display:inline-block;
   position: absolute;
-  width: 50px; 
-  height: 50px; 
+  width: 100rpx; 
+  height: 100rpx; 
 }
 
 .bottom_button :active{
@@ -67,12 +73,12 @@
 
 .bottom_icon
 {
-  width: 34px; 
-  height: 34px;
+  width: 68rpx; 
+  height: 68rpx;
   display:inline-block;
   position: absolute;
-  top: 8px;
-  left: 8px;
+  top: 16rpx;
+  left: 16rpx;
 }
 .bottom_text
 {
@@ -80,7 +86,7 @@
   display:inline-block;
   color: #ffffff;
   width: 100%;
-  font-size:12px;
+  font-size:24rpx;
   bottom: 0;
   text-align: center;
 }
@@ -91,9 +97,9 @@
   display:inline-block;
   color: #ffffff;
   width: 60%;
-  font-size:14px;
+  font-size:28rpx;
   bottom: 0;
-  left: 20px;
+  left: 40rpx;
   text-align: left;
 }
 
@@ -102,37 +108,48 @@
   position: absolute;
   display:inline-block;
   color: #ffffff;
-  font-size:14px;
-  top: 80px;
-  right: 10px;
+  font-size:28rpx;
+  top: 160rpx;
+  right: 20rpx;
   text-align: left;
 }
 
 .danmu_list {
   width:90%; 
   position:absolute;
-  bottom:130px;
-  left: 10px;
-  border: 1px solid #ccc;
+  bottom:260rpx;
+  left: 20rpx;
   color: #fff;
-  font-size: 14px;
+  font-size: 28rpx;
+  height: 400rpx;
 }
+::-webkit-scrollbar {
+  display:none;
+  width:0;
+  height:0;
+  color:transparent;
+}
+
 .danme_item {
-  border: 1px solid #ccc;
-  color: #000;
-  font-size: 14px;
+  border: 2rpx solid #ccc;
+  color: #fff;
+  font-size: 24rpx;
   height: auto;
-  width: 200px;
-  padding: 5px 10px;
+  width: 400rpx;
+  padding: 10rpx 30rpx;
   word-break: break-all;word-wrap:break-word;white-space:pre-line;
-  margin: 10px;
-  background: #fff;
+  margin: 20rpx;
+  background:rgba(0,0,0,.5);
   opacity: 0.5;
-  border-radius: 45px;
+  border-radius: 90rpx;
+  
 }
 
 .danmu_name {
   float: left;
 }
-.danmu_content {
+
+.danmu_marks {
+  float: left;
+  margin: 0 10rpx;
 }
