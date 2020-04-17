@@ -21,7 +21,9 @@ Page({
     debug: false,
     headerHeight: app.globalData.headerHeight,
     statusBarHeight: app.globalData.statusBarHeight,
-    danmulist: [],
+    danmulist: [
+      { uname: '123', text: '123', color: 'white'}
+    ],
     scrollTop:'0px',
 
     timeout:1000, 
