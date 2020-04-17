@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/login/login",
     "pages/live-pusher/push-config/push-config",
     "pages/live-pusher/push"
   ],

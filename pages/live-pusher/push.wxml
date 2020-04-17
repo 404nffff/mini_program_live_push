@@ -43,9 +43,10 @@
       <!-- <cover-image class='close' style="top:{{(headerHeight + statusBarHeight) - 26}}rpx" src="/pages/Resources/back.png" bindtap="onBack"></cover-image> -->
     </live-pusher>
     <!-- 弹幕 -->
+
+
   </view>
 </view>
-
 <scroll-view class="danmu_list" scroll-y="true" scroll-top="{{scrollTop}}" scroll-with-animation="true">
   <view  wx:for="{{danmulist}}" wx:key="unique">
     <view class="danme_item">

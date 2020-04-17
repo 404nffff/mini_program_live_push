@@ -10,7 +10,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "2.4.3",
 	"appid": "wx4c44a3ff9555e519",
-	"projectname": "mlvb-demo",
+	"projectname": "直播工具",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"condition": {
@@ -41,6 +41,12 @@
 					"name": "pages/live-pusher/push",
 					"pathName": "pages/live-pusher/push",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/live-pusher/push-config/push-config",
+					"pathName": "pages/live-pusher/push-config/push-config",
 					"scene": null
 				}
 			]

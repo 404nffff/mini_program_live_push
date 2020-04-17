@@ -11,33 +11,33 @@
 } */
 
 .form{
-  margin: 10px auto;
+  margin: 20rpx auto;
   width:95%;
   background: #fff;
 }
 
 
 .line {
-  border-bottom: 1px solid #f7f8fa;
-  height: 1px;
+  border-bottom: 2rpx solid #f7f8fa;
+  height: 2rpx;
 }
 .item-title {
-  font-size: 14px;
+  font-size: 28rpx;
   color: #000000;
-  line-height: 44px;
+  line-height: 88rpx;
 }
 
 .item {
-  line-height: 38px;
+  line-height: 76rpx;
 }
 
 .item-button1 {
   display: flex;
-  width:23vw;
-  height:30px;
+  width:46rpx;
+  height:60rpx;
   padding: 0 0 0 ;
-  margin-right: 2vw;
-  font-size: 14px;
+  margin-right: 4rpx;
+  font-size: 28rpx;
   color: #000000;
   justify-content: center;
   align-items: center;
@@ -45,14 +45,14 @@
 
 
 .item-image {
-  width:15px;
-  height:15px;
-  padding: 5px;
-  border: 1px solid #e6e6e6;
-  border-radius: 10vh;
-  box-shadow: 0px 0px 5px 1px #e6e6e6; 
+  width:30rpx;
+  height:30rpx;
+  padding: 10rpx;
+  border: 2rpx solid #e6e6e6;
+  border-radius: 20rpx;
+  box-shadow: 0px 0px 10rpx 2rpx #e6e6e6; 
   position: relative;
-  top: 8px;
+  top: 16rpx;
 }
 
 .radio-group {
@@ -60,12 +60,12 @@
   display: flex;
   width: 50vw;
   text-align: center;
-  font-size: 14px;
-  border: 1px solid #0059BF;
-  border-radius: 5px;
-  height:30px;
-  line-height: 25px;
-  margin: 6px 0 0 15px;
+  font-size: 28rpx;
+  border: 2rpx solid #0059BF;
+  border-radius: 10rpx;
+  height:60rpx;
+  line-height: 50rpx;
+  margin: 12rpx 0 0 30rpx;
 }
 
 .radio-group radio {
@@ -86,9 +86,9 @@
 
 label {
   text-align: center;
-  padding: 3px 0;
+  padding: 6rpx 0;
   flex: 1;
-  border-right: 1px solid #0059BF;
+  border-right: 2rpx solid #0059BF;
 }
 
 label:last-child {
@@ -96,7 +96,7 @@ label:last-child {
 }
 
 .item-switch {
-  margin: 6px 0 0 15px;
+  margin: 12rpx 0 0 30rpx;
 }
 
 .start-box {
@@ -110,11 +110,11 @@ label:last-child {
   display: flex;
   width: 20vh;
   height: 20vh;
-  font-size: 20px;
+  font-size: 40rpx;
   color: #0059BF;
   border-radius: 10vh;
   justify-content: center;
   align-items: center;
-  border: #0059BF 1px solid;
+  border: #0059BF 2rpx solid;
   background: #fff;
 }
