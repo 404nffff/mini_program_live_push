@@ -85,13 +85,6 @@ export default class Websocket {
             if (this._heartCheck) {
                 this._reset()._start();
             }
-            // 发送登录信息
-            wx.sendSocketMessage({
-                // 这里是第一次建立连接所发送的信息，应由前后端商量后决定
-                // data: JSON.stringify({
-                //     "key": 'value'
-                // })
-            })
             // 打开网络开关
             this._netWork = true;
             if (typeof callBack == "function") {
@@ -184,6 +177,12 @@ export default class Websocket {
             }, 450000)
             this._connectNum += 1;
         }
+
+        //超过10次自动关闭
+        if (this._connectNum >= 10) {
+            clearTimeout(timer);
+        }
+
     }
     // 关闭websocket连接
     closeWebSocket() {

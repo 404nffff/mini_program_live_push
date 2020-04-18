@@ -243,7 +243,18 @@ Page({
       });
       // 建立连接
       this.websocket._onSocketOpened(() => {
-           console.log('连接成功')
+          console.log('连接成功')
+          // 发送登录信息
+          wx.sendSocketMessage({
+          // 这里是第一次建立连接所发送的信息，应由前后端商量后决定
+              data: JSON.stringify({
+                  "content": '1',
+                  "action": 'liveOnlinePeopleNum',
+                  "username": '1',
+                  "roomId":   app.globalData.roomId,
+                  
+              })
+          })
       })
 
       // 监听websocket状态
@@ -287,6 +298,7 @@ Page({
   
   sendDanmu(result) {
     let jsonData   = JSON.parse(result.data);
+    console.log(jsonData);
     let self       = this;
     const query    = wx.createSelectorQuery()
     query.selectAll('.danme_item').boundingClientRect()

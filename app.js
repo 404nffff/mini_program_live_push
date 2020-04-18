@@ -25,5 +25,6 @@ App({
     headerHeight : 0,
     statusBarHeight : 0,
     websocketUrl:'ws://192.168.22.186:9501?roomId=abcd',
+    roomId:'abcd',
   }
 })
