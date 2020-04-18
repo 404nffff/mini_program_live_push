@@ -11,7 +11,7 @@ Page({
       { value: '480p', title: '480p'},
       { value: '720p', title: '720p'},
     ],
-    mode :'720p',
+    mode :'480p',
     orientationItems: [
       { value: 'vertical', title: '竖屏推流' },
       { value: 'horizontal', title: '横屏推流' },
@@ -132,7 +132,7 @@ Page({
     //   });
     //   return;
     // }
-    var url = '/pages/live-pusher/push?pushUrl=' + encodeURIComponent(self.data.pushUrl) + '@' + self.data.mode + '&orientation=' + self.data.orientation + '&enableCamera=' + self.data.enableCamera;
+    var url = '/pages/live-pusher/push?pushUrl=' + encodeURIComponent(self.data.pushUrl) + '@'+self.data.mode+'&mode=' + self.data.mode + '&orientation=' + self.data.orientation + '&enableCamera=' + self.data.enableCamera;
     console.log(url);
     wx.navigateTo({
       url: url

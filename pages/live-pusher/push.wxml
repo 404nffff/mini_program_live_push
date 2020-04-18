@@ -14,7 +14,7 @@
         <cover-view class="logoName">
           <cover-view class="first">爱拼有家 有你才会赢</cover-view>
           <cover-view class="second">
-            2000人观看
+            {{liveOnlinePeopleNum}} 人观看
           </cover-view>
         </cover-view>
       </cover-view>

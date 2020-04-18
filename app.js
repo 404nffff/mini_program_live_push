@@ -24,7 +24,8 @@ App({
     userInfo: null,
     headerHeight : 0,
     statusBarHeight : 0,
-    websocketUrl:'ws://192.168.22.186:9501?roomId=abcd',
+    websocketUrl:'ws://192.168.22.186:9501?roomId=abcd&secret=33f4987917538319f9bd&token=Yk9oQk5kSEN1bVM4elk2SlZLSzE5M3lMUEF0MndJMCYwJjQ4JjY5JjImMjE0NDN1ZFQwWGE5ZTFNRXFMY212QURHUjVmcEtuNmtWSlcwMg==&username=zm',
     roomId:'abcd',
+    username:'abcd'
   }
 })

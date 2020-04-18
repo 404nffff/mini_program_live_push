@@ -11,7 +11,7 @@ Page({
     frontCamera: true,
     cameraContext: {},
     pushUrl: "",
-    mode: "SD",
+    mode: "720p",
     muted: false,
     enableCamera: true,
     orientation: "vertical",
@@ -25,11 +25,7 @@ Page({
       { uname: '123', text: '123', color: 'white'}
     ],
     scrollTop:'0px',
-
-    timeout:1000, 
-    timeoutObj:null,
-    serverTimeoutObj:null,
-    lockReconnect:true
+    liveOnlinePeopleNum:0
   },
   /**
    * 生命周期函数--监听页面加载
@@ -238,7 +234,7 @@ Page({
       this.websocket = new Websocket({
           // true代表启用心跳检测和断线重连
           heartCheck: true,
-          isReconnection: true,
+          isReconnection: true
           
       });
       // 建立连接
@@ -248,10 +244,10 @@ Page({
           wx.sendSocketMessage({
           // 这里是第一次建立连接所发送的信息，应由前后端商量后决定
               data: JSON.stringify({
-                  "content": '1',
-                  "action": 'liveOnlinePeopleNum',
-                  "username": '1',
-                  "roomId":   app.globalData.roomId,
+                  "content"  : '1',
+                  "action"   : 'liveOnlinePeopleNum',
+                  "username" : app.globalData.username,
+                  "roomId"   : app.globalData.roomId,
                   
               })
           })
@@ -279,14 +275,26 @@ Page({
       })
       // 监听服务器返回
       this.websocket.onReceivedMsg(result => {
-         //console.log('app.js收到服务器内容：' + result.data);
           // 要进行的操作
         let self = this;
         if(result.data == 'PONG'){
             return false;
         }
 
-        self.sendDanmu(result);
+        let jsonData   = JSON.parse(result.data);
+        //console.log(jsonData);
+        let action   = jsonData.action;
+        let content  = jsonData.content;
+        let username = jsonData.username;
+
+
+        if(action == 'broadCast') {
+          self.sendDanmu(username, content);
+        } else if (action == 'liveOnlinePeopleNum') {
+          self.liveOnlinePeopleNum(content);
+        }
+
+        
         
     })
   },
@@ -296,9 +304,7 @@ Page({
       return this.websocket;
   },
   
-  sendDanmu(result) {
-    let jsonData   = JSON.parse(result.data);
-    console.log(jsonData);
+  sendDanmu(username, content) {
     let self       = this;
     const query    = wx.createSelectorQuery()
     query.selectAll('.danme_item').boundingClientRect()
@@ -317,7 +323,7 @@ Page({
       });
       
       self.setData({
-        scrollTop: itemHeight+'px'
+        scrollTop: (itemHeight+28)+'px'
       });
 
     })
@@ -329,9 +335,16 @@ Page({
 
     let timestamp = new Date().getTime();
 
-    danmulist.push({ uname: jsonData.username, text: jsonData.content, color: 'white'});
+    danmulist.push({ uname: username, text: content, color: 'white'});
     self.setData({
       danmulist: danmulist
+    });
+  },
+  liveOnlinePeopleNum(num) {
+    let self = this;
+   
+    self.setData({
+      liveOnlinePeopleNum: num
     });
   }
 
