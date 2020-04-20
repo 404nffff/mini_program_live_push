@@ -20,7 +20,8 @@
   </view>
     <van-row>
       <van-col span="22" offset="1">
-       <van-button type="primary" block color="#0059BF" style="width:95%;">微信登录</van-button>
+       <van-button type="primary" block color="#0059BF"
+       open-type="getUserInfo" bindgetuserinfo="wx_log"  style="width:95%;">微信登录</van-button>
       </van-col>
     </van-row>
    
