@@ -33,46 +33,47 @@ Page({
     if (openId) {
 
       wx.login({
-        success (res) {
-          if (res.code) {
-            var code = res.code;
-              wx.getUserInfo({
-                lang: "zh_CN",
-                success: function(res) {
-                  console.log(res);
-                  var userInfo = res.userInfo
-                  var nickName = userInfo.nickName
-                  var avatarUrl = userInfo.avatarUrl
-                  var gender = userInfo.gender //性别 0：未知、1：男、2：女
-                  var province = userInfo.province
-                  var city = userInfo.city
-                  var country = userInfo.country
-                  var encryptedData = res.encryptedData;
-                  var iv = res.iv;
+        success (result) {
+          if (result.code) {
+            console.log(result.code);
+            var code = result.code;
+            wx.getUserInfo({
+              lang: "zh_CN",
+              success: function(res) {
+                console.log(res);
+                var userInfo = res.userInfo
+                var nickName = userInfo.nickName
+                var avatarUrl = userInfo.avatarUrl
+                var gender = userInfo.gender //性别 0：未知、1：男、2：女
+                var province = userInfo.province
+                var city = userInfo.city
+                var country = userInfo.country
+                var encryptedData = res.encryptedData;
+                var iv = res.iv;
 
-                  wx.request({
-                    url: 'https://test.fooktech.cn/live/login/wx_app_auth', // 仅为示例，并非真实的接口地址
-                    data: {
-                      id: 11,
-                      code: code,
-                      encryptedData: encryptedData,
-                      iv:iv,
-                      userInfo: userInfo
-                    },
-                    header: {
-                      'content-type': 'application/json' // 默认值
-                    },
-                    success(res) {
-                      console.log(res.data);
-                    },
-                    fail(err){
-                      console.log(err); 
-                    }
-                  });
-                }
-              })
+                wx.request({
+                  url: 'https://test.fooktech.cn/live/login/wx_app_auth', // 仅为示例，并非真实的接口地址
+                  data: {
+                    id: 11,
+                    code: code,
+                    encryptedData: encryptedData,
+                    iv:iv,
+                    userInfo: userInfo
+                  },
+                  header: {
+                    'content-type': 'application/json' // 默认值
+                  },
+                  success(res) {
+                    console.log(res.data);
+                  },
+                  fail(err){
+                    console.log(err); 
+                  }
+                });
+              }
+            })
           } else {
-            console.log('登录失败！' + res.errMsg)
+            console.log('登录失败！' + result.errMsg)
           }
         }
       });
