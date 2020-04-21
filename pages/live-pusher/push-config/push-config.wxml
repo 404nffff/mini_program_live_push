@@ -1,7 +1,7 @@
 <!--pages/push-config/push-config.wxml-->
 <view class="mainUI">
   <view class='title' style='padding-top:{{(headerHeight + statusBarHeight)/2 - 12}}px'>
-    <text>RTMP推流</text>
+    <text>直播设置</text>
   </view>
   <view class="form">
 
