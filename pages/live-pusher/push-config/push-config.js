@@ -23,7 +23,7 @@ Page({
     tapTime: '',		// 防止两次点击操作间隔太快
     headerHeight: app.globalData.headerHeight,
     statusBarHeight: app.globalData.statusBarHeight,
-    pushUrl:''
+    pushUrl:'asdasd'
   },
 
   onPushInputTap: function (e) {

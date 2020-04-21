@@ -5,7 +5,7 @@
   </view>
   <view class="form">
 
-    <van-row>
+    <!-- <van-row>
       <van-col span="4" custom-class="item-title" offset="1">推流获取</van-col>
       <van-col span="18" custom-class="item">
           <text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;</text>
@@ -14,12 +14,44 @@
           <van-button bindtap="onNewUrlClick"  size="small" plain color="#0059BF">自动生成</van-button>
       </van-col>
       <van-col span="23" offset="1"><view class="line"></view></van-col>
+    </van-row> -->
+
+    <van-row>
+      <van-col span="24" custom-class='item-text2'>
+       <van-image width="200rpx" height="200rpx" fit="cover" round src="https://img.yzcdn.cn/vant/cat.jpeg" custom-class="item-logo"/>
+       <view>主办方名称</view>
+      </van-col>
     </van-row>
 
      <van-row>
-      <van-col span="4" custom-class="item-title" offset="1">推流地址</van-col>
-      <van-col span="15" custom-class='item'>
-        <van-field placeholder="rtmp://" bind:focus="{{focusPush}}" bind:input='onPushInputTap' bind:change="onPushInputChange" value="{{pushUrl}}" border="{{ false }}" autosize />
+      <van-col span="5" custom-class="item-title" offset="1">活动名称</van-col>
+      <van-col span="15" custom-class='item-text'>
+       123123123
+      </van-col>
+      <van-col span="3" custom-class='item'>
+         
+      </van-col>
+      <van-col span="23" offset="1"><view class="line"></view></van-col>
+    </van-row>
+
+    
+     <van-row>
+      <van-col span="5" custom-class="item-title" offset="1">直播时间</van-col>
+      <van-col span="15" custom-class='item-text'>
+       123123123
+      </van-col>
+      <van-col span="3" custom-class='item'>
+         
+      </van-col>
+      <van-col span="23" offset="1"><view class="line"></view></van-col>
+    </van-row>
+
+     <van-row>
+      <van-col span="5" custom-class="item-title" offset="1">推流地址</van-col>
+      <van-col span="15" custom-class='item-text'>
+
+      {{pushUrl}}
+        <!-- <van-field placeholder="rtmp://" bind:focus="{{focusPush}}" bind:input='onPushInputTap' bind:change="onPushInputChange" value="" border="{{ false }}" autosize /> -->
       </van-col>
       <van-col span="3" custom-class='item'>
           <image class='item-image' bindtap="onCopyPushUrl" src='/pages/Resources/copy.png'></image>
@@ -27,7 +59,7 @@
       <van-col span="23" offset="1"><view class="line"></view></van-col>
     </van-row>
 
-     <van-row>
+     <!-- <van-row>
       <van-col span="4" custom-class="item-title" offset="1">播放地址</van-col>
       <van-col span="15" custom-class='item'>
         <van-field  placeholder="http://" focus="{{focusPlay}}" bindtap='onPlayInputTap' bindinput="onPlayInputChange" value="{{playUrl}}" border="{{ false }}" autosize/>
@@ -36,7 +68,7 @@
           <image class='item-image' bindtap="onCopyPlayUrl" src='/pages/Resources/copy.png'></image>
       </van-col>
       <van-col span="23" offset="1"><view class="line"></view></van-col>
-    </van-row>
+    </van-row> -->
 
      <van-row>
       <van-col span="4" custom-class="item-title" offset="1">画面质量</van-col>

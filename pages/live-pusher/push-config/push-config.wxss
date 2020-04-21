@@ -14,6 +14,7 @@
   margin: 20rpx auto;
   width:95%;
   background: #fff;
+  padding: 16rpx 0 0 0;
 }
 
 
@@ -29,6 +30,22 @@
 
 .item {
   line-height: 76rpx;
+ 
+}
+
+.item-text {
+  line-height: 90rpx;
+  font-size: 28rpx;
+}
+
+.item-logo {
+  clear: both;
+}
+
+.item-text2 {
+  line-height: 40rpx;
+  font-size: 28rpx;
+  text-align: center;
 }
 
 .item-button1 {
@@ -102,7 +119,7 @@ label:last-child {
 .start-box {
   position: absolute;
   width: 100vw;
-  bottom: 150rpx;
+  bottom: 50rpx;
   text-align: center;
 }
 
