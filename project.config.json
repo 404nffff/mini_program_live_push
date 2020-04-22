@@ -56,6 +56,13 @@
 					"pathName": "pages/login/login",
 					"query": "id=11",
 					"scene": null
+				},
+				{
+					"id": 3,
+					"name": "pages/msg/msg",
+					"pathName": "pages/msg/msg",
+					"query": "type=success&msg=直播间已关闭",
+					"scene": null
 				}
 			]
 		}

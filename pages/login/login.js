@@ -32,6 +32,15 @@ Page({
     this.setData({
       id:options.id
     })
+   
+    let loginStatus = utils.checkLoginStatus(id);
+
+    if(loginStatus) {
+      wx.navigateTo({
+        url: '/pages/live-pusher/push-config/push-config?id='+id,
+      });
+    }
+  
   },
 
   /**
@@ -136,12 +145,14 @@ Page({
 
             let userName = userData.user.user_name;
             let token    = userData.user.token;
-            let sercet   = userData.user.sercet;
+            let secret   = userData.user.sercet;
 
-            wx.setStorageSync("index_data_expiration", expiration);
+            let expiration  = Math.round(new Date().getTime()/1000);//拿到现在时间
+
+            wx.setStorageSync("index_data_expiration", expiration+604800);
             wx.setStorageSync("userName", userName);
             wx.setStorageSync("token", token);
-            wx.setStorageSync("sercet", sercet);
+            wx.setStorageSync("secret", secret);
 
 
             Toast({

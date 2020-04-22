@@ -5,7 +5,7 @@ import utils from "./utils/utils";
 import config from "./config/config";
 
 App({
-  onLaunch: function () {
+  onLaunch: function (options) {
     const { model, system, statusBarHeight } = wx.getSystemInfoSync();
     var headHeight;
     if (/iphone\s{0,}x/i.test(model)) {
@@ -21,15 +21,11 @@ App({
    
 
     utils.checkUpdateVersion();
-
-  
+    
   },
   onShow :(options) => {
 
-    let path = options.path;
-    let aid  = options.query.id;
-
-    utils.checkLoginStatus(path, aid);
+    
 
   },
   globalData: {

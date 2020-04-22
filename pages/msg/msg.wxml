@@ -1,0 +1,35 @@
+<!--pages/push-config/push-config.wxml-->
+<view class="mainUI">
+  <view class='title' style='padding-top:{{(headerHeight + statusBarHeight)/2 - 12}}px'>
+    <text>消息提示</text>
+  </view>
+  <view class="form">
+
+    <van-row>
+      <van-col span="24" custom-class='item'>
+        <van-icon name="checked" size="200rpx" color="green"/>
+      </van-col>
+    </van-row>
+
+     <van-row>
+      
+       
+      </van-row>
+     <van-row>
+      <van-col span="24" custom-class='item'>
+        {{msg}}
+      </van-col>
+       
+      </van-row>
+     
+  </view>
+    <van-row>
+      <van-col span="22" offset="1">
+       <van-button type="primary" block color="#0059BF" style="width:95%;">返回</van-button>
+      </van-col>
+    </van-row>
+</view>
+<van-toast id="van-toast" />
+
+<!-- 
+<cover-image class='close' style="top:{{(headerHeight + statusBarHeight) - 26}}rpx" src="/pages/Resources/back.png" bindtap="onBack"></cover-image> -->

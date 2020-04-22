@@ -2,6 +2,7 @@
 const app = getApp();
 
 import Websocket from "../../utils/socket";
+import utils  from "../../utils/utils";
 Page({
 
   /**
@@ -25,20 +26,44 @@ Page({
       { uname: '123', text: '123', color: 'white'}
     ],
     scrollTop:'0px',
-    liveOnlinePeopleNum:0
+    liveOnlinePeopleNum:0,
+    shopLogo:'',
+    activityName:'',
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     console.log("onLoad");
+
+    let player   = wx.getStorageSync("player");
+    let userName = wx.getStorageSync("userName");
+    let token    = wx.getStorageSync("token");
+    let secret   = wx.getStorageSync("secret");
+
+
+    let id          = player.id;
+    let loginStatus = utils.checkLoginStatus(id);
+  
     this.setData({
       mode: options.mode,
       orientation: options.orientation,
       enableCamera: options.enableCamera === "false" ? false : true,
-      pushUrl: decodeURIComponent(options.pushUrl)
+      pushUrl: decodeURIComponent(options.pushUrl),
+      shopLogo:player.player_master_logo,
+      activityName:player.name,
+      liveOnlinePeopleNum:player.virtual_watch_num
     });
+
+    //websocketUrl    :'ws://192.168.22.186:9501?roomId=abcd&secret=33f4987917538319f9bd&token=Yk9oQk5kSEN1bVM4elk2SlZLSzE5M3lMUEF0MndJMCYwJjQ4JjY5JjImMjE0NDN1ZFQwWGE5ZTFNRXFMY212QURHUjVmcEtuNmtWSlcwMg==&username=zm',
+
+    //app.globalData.websocketUrl = player.barrage_ip+'?roomId='+player.id+'&secret='+secret+'&token='+token+'&username='+userName;
+    //app.globalData.websocketUrl = 'ws://192.168.51.26:9501'+'?roomId='+player.id+'&secret='+secret+'&token='+token+'&username='+userName;
+    //app.globalData.websocketUrl = 'ws://192.168.51.26:9501/?roomId=11&secret=706657f812865dc126e6&token=d1JBckJVU0lXNkhKWkF4c2cwS3poTkc0VqVkNiVTZkNzAmMCYwJjAmMCYyNjgyMiYwMQRlVJc24yYWRBYmlJUk5TbzVBcGpPSk==&username=oqEJb1XdOTmw1ryGzAxoSgHnimr4';
+
+    //console.log(app.globalData.websocketUrl);
   
+
   },
 
   /**
@@ -170,10 +195,24 @@ Page({
           wx.showToast({
               title: '直播间已关闭',
               icon: 'success',
-              duration: 1000,
+              duration: 2000,
               success:() =>{
                 self.stop();
-                wx.closeSocket();
+                wx.closeSocket({
+                  success:() => {
+                    app.globalData.websocketUrl = '';
+                    app.globalData.roomId       = '';
+                    app.globalData.username     = '';
+    
+                    wx.clearStorageSync();
+    
+                    wx.redirectTo({
+                      url: '/pages/msg/msg?type=success&msg=直播间已关闭'
+                    })
+                  }
+                });
+
+               
               }
           });
           
@@ -199,9 +238,6 @@ Page({
       debug: false
     })
     this.data.cameraContext.stop();
-    wx.redirectTo({
-      url: '/pages/live-pusher/push-config/push-config'
-    })
   },
 
   createContext: function () {
@@ -342,9 +378,9 @@ Page({
   },
   liveOnlinePeopleNum(num) {
     let self = this;
-   
+    let nowPeopleNum = self.data.liveOnlinePeopleNum;
     self.setData({
-      liveOnlinePeopleNum: num
+      liveOnlinePeopleNum: nowPeopleNum+num
     });
   }
 

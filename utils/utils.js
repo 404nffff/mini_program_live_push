@@ -46,23 +46,45 @@ function alertMsg(content, callBack){
   })
 }
 
+function alertConfirmMsg(content, callBack){
+  wx.showModal({
+    title        : '提示',
+    content      : content,
+    confirmColor : '#0059BF',
+    success (res) {
+      if (res.confirm) {
+        if (typeof callBack == "function") {
+            callBack(res)
+        }
+      } else if (res.cancel) {
+        console.log('用户点击取消')
+      }
 
-function checkLoginStatus(path, aid)
+      
+    }
+  })
+}
+
+
+function checkLoginStatus(aid)
 {
-  let userName   = wx.getStorageSync("userName");
-  let token      = wx.getStorageSync("token");
-  let sercet     = wx.getStorageSync("sercet");
-  let expiration = wx.getStorageSync("index_data_expiration");//拿到过期时间
-  let timestamp  = Math.round(new Date().getTime()/1000);;//拿到现在时间
-  
+  let userName      = wx.getStorageSync("userName");
+  let token         = wx.getStorageSync("token");
+  let secret        = wx.getStorageSync("secret");
+  let expiration    = wx.getStorageSync("index_data_expiration");//拿到过期时间
+  let timestamp     = Math.round(new Date().getTime()/1000);//拿到现在时间
+  const pages       = getCurrentPages();
+  const currentPage = pages[pages.length - 1];
+  const path        = `/${currentPage.route}`;
+
   if(
       userName == undefined || 
       token == undefined || 
-      sercet == undefined || 
+      secret == undefined || 
       expiration == undefined || 
       userName == '' || 
       token == '' || 
-      sercet == '' || 
+      secret == '' || 
       expiration == '' 
     ) {
     alertMsg('请先登录', () => {
@@ -78,6 +100,7 @@ function checkLoginStatus(path, aid)
   //进行时间比较
 
   if(expiration < timestamp){//过期了，清空缓存，跳转到登录
+
     alertMsg('登录凭证已过期，请重新登录', () => {
       wx.clearStorageSync();//清空缓存
 
@@ -89,13 +112,12 @@ function checkLoginStatus(path, aid)
     })
     return false;
   }
-  wx.navigateTo({
-      url: '/pages/live-pusher/push-config/push-config?id='+aid,
-  });
+  return true;
 }
 
 module.exports = {
     checkUpdateVersion: checkUpdateVersion,
     alertMsg:alertMsg,
-    checkLoginStatus:checkLoginStatus
+    checkLoginStatus:checkLoginStatus,
+    alertConfirmMsg:alertConfirmMsg
 }

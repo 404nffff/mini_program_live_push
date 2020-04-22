@@ -18,18 +18,18 @@
 
     <van-row>
       <van-col span="18" custom-class='item-text2'>
-       <van-image width="200rpx" height="200rpx" fit="cover" round src="https://img.yzcdn.cn/vant/cat.jpeg" custom-class="item-logo"/>
-       <view>主办方名称</view>
+       <van-image width="200rpx" height="200rpx" fit="cover" round src="{{shopLogo}}" custom-class="item-logo"/>
+       <view>{{shopName}}</view>
       </van-col>
       <van-col span="6" custom-class='item-text2'>
-        <van-button type="default" size="small" plain color="#0059BF">解除绑定</van-button>
+        <van-button type="default" size="small" plain color="#0059BF" bind:click="onLiveBindCancel">解除绑定</van-button>
       </van-col>
     </van-row>
 
      <van-row>
       <van-col span="5" custom-class="item-title" offset="1">活动名称</van-col>
       <van-col span="15" custom-class='item-text'>
-       123123123
+       {{activityName}}
       </van-col>
       <van-col span="3" custom-class='item'>
          
@@ -41,7 +41,7 @@
      <van-row>
       <van-col span="5" custom-class="item-title" offset="1">直播时间</van-col>
       <van-col span="15" custom-class='item-text'>
-       123123123
+       {{liveTime}}
       </van-col>
       <van-col span="3" custom-class='item'>
          

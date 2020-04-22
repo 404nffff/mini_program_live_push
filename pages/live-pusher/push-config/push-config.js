@@ -29,7 +29,11 @@ Page({
     tapTime: '',		// 防止两次点击操作间隔太快
     headerHeight: app.globalData.headerHeight,
     statusBarHeight: app.globalData.statusBarHeight,
-    pushUrl:''
+    pushUrl:'',
+    shopLogo:'',
+    shopName:'',
+    activityName:'',
+    liveTime:'',
   },
 
   /**
@@ -43,6 +47,8 @@ Page({
     });
 
     let aid = options.id;
+    utils.checkLoginStatus(aid);
+
     if(aid == 'undefined'  || aid == undefined || aid == '') {
       Toast({
           type: 'fail',
@@ -57,14 +63,15 @@ Page({
         });
       return false;
     }
+   
     
-
+    let self       = this;
     let userName   = wx.getStorageSync("userName");
     let token      = wx.getStorageSync("token");
     let sercet     = wx.getStorageSync("sercet");
     let player     = wx.getStorageSync("player");
     let liveUserId = wx.getStorageSync("liveUserId");
-
+    
 
     wxRequest({
       url: config.api.bindLive, 
@@ -96,8 +103,15 @@ Page({
         app.globalData.roomId   = aid;
         app.globalData.username = userName;
         
-
-
+        self.setData({
+          shopLogo:player.player_master_logo,
+          shopName:player.player_master_name,
+          activityName:player.name,
+          liveTime:player.live_time_text,
+          pushUrl:player.rtmp_url
+        })
+        
+        Toast.clear();
       }).catch(err => {
         Toast.clear();
         Toast({
@@ -286,5 +300,51 @@ Page({
     });
     
     self.setData({ 'tapTime': nowTime });
+  },
+  //解除绑定
+  onLiveBindCancel : function () {
+    utils.alertConfirmMsg('是否确认解除绑定？', () => {
+      Toast.loading({
+        mask: true,
+        message: '加载中...',
+        duration:0
+      });
+      let userName   = wx.getStorageSync("userName");
+      let liveUserId = wx.getStorageSync("liveUserId");
+      let play       = wx.getStorageSync("play");
+      let aid        = wx.getStorageSync("aid");
+      wxRequest({
+        url: config.api.LivebindCancel, 
+        data: {
+          id      : liveUserId,
+          unionId : userName
+        },
+        header: {'Authorization': 'cFZ3c3Y2bGRYazVnNGJDRXhhN0Q4WURUJkTlNDRktybDAmMCYxJjEmMCYyMTQ0MyYwMgTjY4MnhWMXVLaE9yaG9ESjlseFIyaW=='}
+        }).then(res => {
+  
+          let errCode  = res.data.errCode;
+          let msg      = res.data.msg;
+          let activity = res.data.data;
+          if(errCode != '000000') {
+            return Promise.reject(msg);
+          }
+          
+          
+          Toast.clear();
+
+          // app.globalData.websocketUrl = '';
+          // app.globalData.roomId       = '';
+          // app.globalData.username     = '';
+
+          // wx.clearStorageSync();
+
+          wx.redirectTo({
+            url: '/pages/msg/msg?type=return&msg=已成功解除绑定&id='+aid
+          })
+        }).catch(err => {
+          Toast.clear();
+          utils.alertMsg('登录失败 : '+err.errMsg)
+        })
+    })
   }
 })

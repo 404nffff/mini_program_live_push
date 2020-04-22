@@ -7,12 +7,12 @@
       <cover-view class="shopName">
         <cover-view class="logo">
           <cover-image
-            src="http://nuomasource.oss-cn-beijing.aliyuncs.com/rEuUtazecR20190916115004.jpg"
+            src="{{shopLogo}}"
             alt
           />
         </cover-view>
         <cover-view class="logoName">
-          <cover-view class="first">爱拼有家 有你才会赢</cover-view>
+          <cover-view class="first">{{activityName}}</cover-view>
           <cover-view class="second">
             {{liveOnlinePeopleNum}} 人观看
           </cover-view>
