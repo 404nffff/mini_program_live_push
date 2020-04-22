@@ -1,5 +1,11 @@
 // pages/push-config/push-config.js
 const app = getApp()
+import utils  from "../../../utils/utils";
+import config from "../../../config/config";
+
+import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
+const promisify = require('../../../utils/promise');
+const wxRequest = promisify(wx.request);
 
 Page({
 
@@ -23,9 +29,150 @@ Page({
     tapTime: '',		// 防止两次点击操作间隔太快
     headerHeight: app.globalData.headerHeight,
     statusBarHeight: app.globalData.statusBarHeight,
-    pushUrl:'asdasd'
+    pushUrl:''
   },
 
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    Toast.loading({
+      mask: true,
+      message: '加载中...',
+      duration:0
+    });
+
+    let aid = options.id;
+    if(aid == 'undefined'  || aid == undefined || aid == '') {
+      Toast({
+          type: 'fail',
+          message: '请重新登录',
+          mask:true,
+          duration:2000,
+          onClose: () => {
+            wx.navigateBack({
+              delta: 1
+            })
+          }
+        });
+      return false;
+    }
+    
+
+    let userName   = wx.getStorageSync("userName");
+    let token      = wx.getStorageSync("token");
+    let sercet     = wx.getStorageSync("sercet");
+    let player     = wx.getStorageSync("player");
+    let liveUserId = wx.getStorageSync("liveUserId");
+
+
+    wxRequest({
+      url: config.api.bindLive, 
+      data: {
+        id      : aid,
+        unionId : userName
+      },
+      header: {'Authorization': 'cFZ3c3Y2bGRYazVnNGJDRXhhN0Q4WURUJkTlNDRktybDAmMCYxJjEmMCYyMTQ0MyYwMgTjY4MnhWMXVLaE9yaG9ESjlseFIyaW=='}
+      }).then(res => {
+
+        let errCode  = res.data.errCode;
+        let msg      = res.data.msg;
+        let activity = res.data.data;
+        if(errCode != '000000') {
+          return Promise.reject(msg);
+        }
+        let liveUserId = activity.live_user_id; //绑定表id 
+        let player     = activity.player; //活动数据 
+        
+        var timestamp  = Math.round(new Date().getTime()/1000);
+        var expiration = timestamp + 604800; //七天
+
+
+
+        wx.setStorageSync("player", player);
+        wx.setStorageSync("liveUserId", liveUserId);
+
+
+        app.globalData.roomId   = aid;
+        app.globalData.username = userName;
+        
+
+
+      }).catch(err => {
+        Toast.clear();
+        Toast({
+          type: 'fail',
+          message: err,
+          mask:true,
+          duration:2000,
+          onClose: () => {
+            wx.navigateBack({
+              delta: 1
+            })
+          }
+        });
+      })
+
+
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+   
+    
+
+
+
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  // onShareAppMessage: function () {
+
+  // },
+  onBack: function () {
+    wx.navigateBack({
+      delta: 1
+    });
+  },
   onPushInputTap: function (e) {
     this.setData({
       focusPush: true,
@@ -139,65 +286,5 @@ Page({
     });
     
     self.setData({ 'tapTime': nowTime });
-  },
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  // onShareAppMessage: function () {
-
-  // },
-  onBack: function () {
-    wx.navigateBack({
-      delta: 1
-    });
   }
 })

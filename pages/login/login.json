@@ -3,7 +3,8 @@
     "van-button": "/miniprogram_npm/@vant/weapp/button/index",
     "van-row": "/miniprogram_npm/@vant/weapp/row/index",
     "van-col": "/miniprogram_npm/@vant/weapp/col/index",
-    "van-image": "/miniprogram_npm/@vant/weapp/image/index"
+    "van-image": "/miniprogram_npm/@vant/weapp/image/index",
+    "van-toast": "/miniprogram_npm/@vant/weapp/toast/index"
   },
   "disableScroll": true
 }

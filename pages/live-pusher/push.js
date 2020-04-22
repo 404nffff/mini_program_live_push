@@ -1,7 +1,7 @@
 // pages/push/push.js
 const app = getApp();
 
-import Websocket from "../utils/socket";
+import Websocket from "../../utils/socket";
 Page({
 
   /**
@@ -167,7 +167,7 @@ Page({
           //console.log('用户点击确定')
 
           
-            wx.showToast({
+          wx.showToast({
               title: '直播间已关闭',
               icon: 'success',
               duration: 1000,

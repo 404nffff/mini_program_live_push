@@ -17,9 +17,12 @@
     </van-row> -->
 
     <van-row>
-      <van-col span="24" custom-class='item-text2'>
+      <van-col span="18" custom-class='item-text2'>
        <van-image width="200rpx" height="200rpx" fit="cover" round src="https://img.yzcdn.cn/vant/cat.jpeg" custom-class="item-logo"/>
        <view>主办方名称</view>
+      </van-col>
+      <van-col span="6" custom-class='item-text2'>
+        <van-button type="default" size="small" plain color="#0059BF">解除绑定</van-button>
       </van-col>
     </van-row>
 
@@ -53,9 +56,9 @@
       {{pushUrl}}
         <!-- <van-field placeholder="rtmp://" bind:focus="{{focusPush}}" bind:input='onPushInputTap' bind:change="onPushInputChange" value="" border="{{ false }}" autosize /> -->
       </van-col>
-      <van-col span="3" custom-class='item'>
+      <!-- <van-col span="3" custom-class='item'>
           <image class='item-image' bindtap="onCopyPushUrl" src='/pages/Resources/copy.png'></image>
-      </van-col>
+      </van-col> -->
       <van-col span="23" offset="1"><view class="line"></view></van-col>
     </van-row>
 
@@ -109,5 +112,6 @@
   </button>
 </view>
 
+<van-toast id="van-toast" />
 <!-- 
 <cover-image class='close' style="top:{{(headerHeight + statusBarHeight) - 26}}rpx" src="/pages/Resources/back.png" bindtap="onBack"></cover-image> -->

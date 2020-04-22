@@ -21,11 +21,12 @@
     <van-row>
       <van-col span="22" offset="1">
        <van-button type="primary" block color="#0059BF"
-       open-type="getUserInfo" bindgetuserinfo="wx_log"  style="width:95%;">微信登录</van-button>
+       open-type="getUserInfo" bindgetuserinfo="wxLogin"  style="width:95%;">微信登录</van-button>
       </van-col>
     </van-row>
    
 </view>
+<van-toast id="van-toast" />
 
 <!-- 
 <cover-image class='close' style="top:{{(headerHeight + statusBarHeight) - 26}}rpx" src="/pages/Resources/back.png" bindtap="onBack"></cover-image> -->

@@ -47,6 +47,14 @@
 					"id": -1,
 					"name": "pages/live-pusher/push-config/push-config",
 					"pathName": "pages/live-pusher/push-config/push-config",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 2,
+					"name": "登录带参数",
+					"pathName": "pages/login/login",
+					"query": "id=11",
 					"scene": null
 				}
 			]
