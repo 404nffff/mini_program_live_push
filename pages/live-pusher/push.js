@@ -3,6 +3,13 @@ const app = getApp();
 
 import Websocket from "../../utils/socket";
 import utils  from "../../utils/utils";
+import config from "../../config/config";
+
+import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
+
+const promisify = require('../../utils/promise');
+const wxRequest = promisify(wx.request);
+
 Page({
 
   /**
@@ -57,9 +64,9 @@ Page({
 
     //websocketUrl    :'ws://192.168.22.186:9501?roomId=abcd&secret=33f4987917538319f9bd&token=Yk9oQk5kSEN1bVM4elk2SlZLSzE5M3lMUEF0MndJMCYwJjQ4JjY5JjImMjE0NDN1ZFQwWGE5ZTFNRXFMY212QURHUjVmcEtuNmtWSlcwMg==&username=zm',
 
-    //app.globalData.websocketUrl = player.barrage_ip+'?roomId='+player.id+'&secret='+secret+'&token='+token+'&username='+userName;
+    app.globalData.websocketUrl = player.barrage_ip+'?roomId='+player.id+'&secret='+secret+'&token='+token+'&username='+userName;
     //app.globalData.websocketUrl = 'ws://192.168.51.26:9501'+'?roomId='+player.id+'&secret='+secret+'&token='+token+'&username='+userName;
-    //app.globalData.websocketUrl = 'ws://192.168.51.26:9501/?roomId=11&secret=706657f812865dc126e6&token=d1JBckJVU0lXNkhKWkF4c2cwS3poTkc0VqVkNiVTZkNzAmMCYwJjAmMCYyNjgyMiYwMQRlVJc24yYWRBYmlJUk5TbzVBcGpPSk==&username=oqEJb1XdOTmw1ryGzAxoSgHnimr4';
+    //app.globalData.websocketUrl = 'ws://192.168.22.186:9501/?roomId=11&secret=706657f812865dc126e6&token=d1JBckJVU0lXNkhKWkF4c2cwS3poTkc0VqVkNiVTZkNzAmMCYwJjAmMCYyNjgyMiYwMQRlVJc24yYWRBYmlJUk5TbzVBcGpPSk==&username=oqEJb1XdOTmw1ryGzAxoSgHnimr4';
 
     //console.log(app.globalData.websocketUrl);
   
@@ -174,6 +181,9 @@ Page({
         duration: 1000,
         success:() =>{
           self.stop();
+          wx.navigateBack({
+            delta: 1
+          })
         }
       })
     }
@@ -191,15 +201,41 @@ Page({
         if (res.confirm) {
           //console.log('用户点击确定')
 
-          
-          wx.showToast({
-              title: '直播间已关闭',
-              icon: 'success',
-              duration: 2000,
-              success:() =>{
-                self.stop();
-                wx.closeSocket({
-                  success:() => {
+          let userName   = wx.getStorageSync("userName");
+          let token      = wx.getStorageSync("token");
+          let sercet     = wx.getStorageSync("sercet");
+          let player     = wx.getStorageSync("player");
+          let liveUserId = wx.getStorageSync("liveUserId");
+          let aid        = player.id;
+      
+          //console.log(config.api.startLive);
+          wxRequest({
+            url: config.api.changeLiveStatus, 
+            data: {
+              player_id    : aid,
+              user_name    : userName,
+              live_status  : 3,
+              live_user_id : liveUserId,
+            },
+            header: {'Authorization': 'cFZ3c3Y2bGRYazVnNGJDRXhhN0Q4WURUJkTlNDRktybDAmMCYxJjEmMCYyMTQ0MyYwMgTjY4MnhWMXVLaE9yaG9ESjlseFIyaW=='}
+            }).then(res => {
+      
+              let errCode  = res.data.errCode;
+              let msg      = res.data.msg;
+              let activity = res.data.data;
+              if(errCode != '000000') {
+                return Promise.reject(msg);
+              }
+              Toast.clear();
+              wx.showToast({
+                  title: '直播间已关闭',
+                  icon: 'success',
+                  duration: 2000,
+                  success:() =>{
+                    
+                    self.stop();
+
+                    self.websocket.closeWebSocket();
                     app.globalData.websocketUrl = '';
                     app.globalData.roomId       = '';
                     app.globalData.username     = '';
@@ -209,12 +245,32 @@ Page({
                     wx.redirectTo({
                       url: '/pages/msg/msg?type=success&msg=直播间已关闭'
                     })
+    
+                  
                   }
-                });
-
-               
-              }
-          });
+              });
+             
+            }).catch(err => {
+              app.globalData.websocketUrl = '';
+              app.globalData.roomId       = '';
+              app.globalData.username     = '';
+      
+              wx.clearStorageSync();
+      
+              Toast.clear();
+              Toast({
+                type: 'fail',
+                message: err,
+                mask:true,
+                duration:2000,
+                onClose: () => {
+                  wx.navigateBack({
+                    delta: 1
+                  })
+                }
+              });
+            })
+          
           
 
         } else if (res.cancel) {
@@ -225,6 +281,7 @@ Page({
     
   },
   stop: function () {
+
     this.setData({
       playing: false,
       pushUrl: "",
@@ -276,14 +333,17 @@ Page({
       // 建立连接
       this.websocket._onSocketOpened(() => {
           console.log('连接成功')
+          let player   = wx.getStorageSync("player");
+          let userName = wx.getStorageSync("userName");
+
           // 发送登录信息
           wx.sendSocketMessage({
           // 这里是第一次建立连接所发送的信息，应由前后端商量后决定
               data: JSON.stringify({
                   "content"  : '1',
                   "action"   : 'liveOnlinePeopleNum',
-                  "username" : app.globalData.username,
-                  "roomId"   : app.globalData.roomId,
+                  "username" : userName,
+                  "roomId"   : player.id,
                   
               })
           })
@@ -311,6 +371,7 @@ Page({
       })
       // 监听服务器返回
       this.websocket.onReceivedMsg(result => {
+
           // 要进行的操作
         let self = this;
         if(result.data == 'PONG'){
@@ -318,7 +379,7 @@ Page({
         }
 
         let jsonData   = JSON.parse(result.data);
-        //console.log(jsonData);
+       
         let action   = jsonData.action;
         let content  = jsonData.content;
         let username = jsonData.username;
@@ -377,10 +438,12 @@ Page({
     });
   },
   liveOnlinePeopleNum(num) {
-    let self = this;
-    let nowPeopleNum = self.data.liveOnlinePeopleNum;
+
+    let player = wx.getStorageSync("player");
+    let self   = this;
+    let nowPeopleNum = player.virtual_watch_num+num;
     self.setData({
-      liveOnlinePeopleNum: nowPeopleNum+num
+      liveOnlinePeopleNum: nowPeopleNum
     });
   }
 

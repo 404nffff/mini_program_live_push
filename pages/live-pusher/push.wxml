@@ -56,3 +56,5 @@
     </view>
   </view>
 </scroll-view>
+
+<van-toast id="van-toast" />

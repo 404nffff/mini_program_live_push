@@ -3,7 +3,7 @@
   <view class='title' style='padding-top:{{(headerHeight + statusBarHeight)/2 - 12}}px'>
     <text>直播设置</text>
   </view>
-  <view class="form">
+  <view class="form" style="display:{{display}}">
 
     <!-- <van-row>
       <van-col span="4" custom-class="item-title" offset="1">推流获取</van-col>
@@ -106,7 +106,7 @@
   </view>
 </view>
 
-<view class='start-box'>
+<view class='start-box' style="display:{{display}}">
   <button class='start' bindtap="startPush">   
     开始
   </button>

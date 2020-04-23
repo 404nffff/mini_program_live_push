@@ -34,6 +34,7 @@ Page({
     shopName:'',
     activityName:'',
     liveTime:'',
+    display:'none'
   },
 
   /**
@@ -108,11 +109,18 @@ Page({
           shopName:player.player_master_name,
           activityName:player.name,
           liveTime:player.live_time_text,
-          pushUrl:player.rtmp_url
+          pushUrl:player.rtmp_url,
+          display:'block'
         })
         
         Toast.clear();
       }).catch(err => {
+        app.globalData.websocketUrl = '';
+        app.globalData.roomId       = '';
+        app.globalData.username     = '';
+
+        wx.clearStorageSync();
+
         Toast.clear();
         Toast({
           type: 'fail',
@@ -285,6 +293,12 @@ Page({
     if (nowTime - this.data.tapTime < 1000) {
       return;
     }
+    Toast.loading({
+      mask: true,
+      message: '加载中...',
+      duration:0
+    });
+
     // if (!self.data.pushUrl || self.data.pushUrl.indexOf("rtmp://") != 0) {
     //   wx.showModal({
     //     title: '提示',
@@ -293,13 +307,59 @@ Page({
     //   });
     //   return;
     // }
-    var url = '/pages/live-pusher/push?pushUrl=' + encodeURIComponent(self.data.pushUrl) + '@'+self.data.mode+'&mode=' + self.data.mode + '&orientation=' + self.data.orientation + '&enableCamera=' + self.data.enableCamera;
-    console.log(url);
-    wx.navigateTo({
-      url: url
-    });
-    
-    self.setData({ 'tapTime': nowTime });
+    let userName   = wx.getStorageSync("userName");
+    let token      = wx.getStorageSync("token");
+    let sercet     = wx.getStorageSync("sercet");
+    let player     = wx.getStorageSync("player");
+    let liveUserId = wx.getStorageSync("liveUserId");
+    let aid        = player.id;
+
+    //console.log(config.api.startLive);
+    wxRequest({
+      url: config.api.changeLiveStatus, 
+      data: {
+        player_id    : aid,
+        user_name    : userName,
+        live_status  : 2,
+        live_user_id : liveUserId,
+      },
+      header: {'Authorization': 'cFZ3c3Y2bGRYazVnNGJDRXhhN0Q4WURUJkTlNDRktybDAmMCYxJjEmMCYyMTQ0MyYwMgTjY4MnhWMXVLaE9yaG9ESjlseFIyaW=='}
+      }).then(res => {
+
+        let errCode  = res.data.errCode;
+        let msg      = res.data.msg;
+        let activity = res.data.data;
+        if(errCode != '000000') {
+          return Promise.reject(msg);
+        }
+        var url = '/pages/live-pusher/push?pushUrl=' + encodeURIComponent(self.data.pushUrl) + '@'+self.data.mode+'&mode=' + self.data.mode + '&orientation=' + self.data.orientation + '&enableCamera=' + self.data.enableCamera;
+        console.log(url);
+        wx.navigateTo({
+          url: url
+        });
+        
+        self.setData({ 'tapTime': nowTime });
+        Toast.clear();
+      }).catch(err => {
+        app.globalData.websocketUrl = '';
+        app.globalData.roomId       = '';
+        app.globalData.username     = '';
+
+        wx.clearStorageSync();
+
+        Toast.clear();
+        Toast({
+          type: 'fail',
+          message: err,
+          mask:true,
+          duration:2000,
+          onClose: () => {
+            wx.navigateBack({
+              delta: 1
+            })
+          }
+        });
+      })
   },
   //解除绑定
   onLiveBindCancel : function () {
@@ -311,8 +371,8 @@ Page({
       });
       let userName   = wx.getStorageSync("userName");
       let liveUserId = wx.getStorageSync("liveUserId");
-      let play       = wx.getStorageSync("play");
-      let aid        = wx.getStorageSync("aid");
+      let player     = wx.getStorageSync("player");
+      let aid        = player.id;
       wxRequest({
         url: config.api.LivebindCancel, 
         data: {
@@ -332,18 +392,18 @@ Page({
           
           Toast.clear();
 
-          // app.globalData.websocketUrl = '';
-          // app.globalData.roomId       = '';
-          // app.globalData.username     = '';
+          app.globalData.websocketUrl = '';
+          app.globalData.roomId       = '';
+          app.globalData.username     = '';
 
-          // wx.clearStorageSync();
+          wx.clearStorageSync();
 
           wx.redirectTo({
             url: '/pages/msg/msg?type=return&msg=已成功解除绑定&id='+aid
           })
         }).catch(err => {
           Toast.clear();
-          utils.alertMsg('登录失败 : '+err.errMsg)
+          utils.alertMsg('解除失败 : '+err.errMsg)
         })
     })
   }

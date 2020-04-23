@@ -87,14 +87,14 @@ function checkLoginStatus(aid)
       secret == '' || 
       expiration == '' 
     ) {
-    alertMsg('请先登录', () => {
+    //alertMsg('请先登录', () => {
         wx.clearStorageSync();//清空缓存
         if(path.indexOf('pages/login/login') == -1) {
           wx.redirectTo({
             url: '/pages/login/login?id='+aid,
           });//跳转到登录
         }
-      })
+      //})
       return false;
     }
   //进行时间比较

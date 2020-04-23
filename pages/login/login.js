@@ -23,6 +23,13 @@ Page({
    */
   onLoad: function (options) {
 
+    Toast.loading({
+      mask: true,
+      message: '加载中...',
+      duration:1000
+    });
+
+
     let id = options.id;
 
     if(id == undefined){
@@ -33,6 +40,8 @@ Page({
       id:options.id
     })
    
+    
+
     let loginStatus = utils.checkLoginStatus(id);
 
     if(loginStatus) {
@@ -40,7 +49,7 @@ Page({
         url: '/pages/live-pusher/push-config/push-config?id='+id,
       });
     }
-  
+    
   },
 
   /**
@@ -54,10 +63,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function (options) {
-    
+   
     //
     //console.log(url);
-
+    
   },
 
   /**

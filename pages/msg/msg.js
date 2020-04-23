@@ -29,6 +29,9 @@ Page({
     let msg  = options.msg;
     let id   = options.id;
 
+    if(id == '' || id == undefined) {
+      id = '';
+    }
    
     this.setData({
       type:options.type,
@@ -81,5 +84,15 @@ Page({
    */
   onReachBottom: function () {
 
+  }
+  ,
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReturnBottom: function () {
+    let aid = this.data.id;
+    wx.redirectTo({
+      url: '/pages/login/login?id='+aid,
+    });
   }
 })

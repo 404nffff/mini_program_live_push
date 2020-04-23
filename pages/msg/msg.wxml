@@ -23,11 +23,13 @@
       </van-row>
      
   </view>
+  <view wx:if="{{type == 'return'}}">
     <van-row>
       <van-col span="22" offset="1">
-       <van-button type="primary" block color="#0059BF" style="width:95%;">返回</van-button>
+       <van-button type="primary" block color="#0059BF" style="width:95%;" bind:click="onReturnBottom">重新绑定</van-button>
       </van-col>
     </van-row>
+     </view>
 </view>
 <van-toast id="van-toast" />
 

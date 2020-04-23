@@ -3,6 +3,7 @@
   "backgroundTextStyle": "light",
   "disableScroll": true,
   "usingComponents": {
-    "van-transition": "/miniprogram_npm/@vant/weapp/transition/index"
+    "van-transition": "/miniprogram_npm/@vant/weapp/transition/index",
+    "van-toast": "/miniprogram_npm/@vant/weapp/toast/index"
   }
 }
