@@ -372,12 +372,16 @@ Page({
       // 监听服务器返回
       this.websocket.onReceivedMsg(result => {
 
+
+       
           // 要进行的操作
         let self = this;
         if(result.data == 'PONG'){
             return false;
         }
 
+
+        console.log(result);
         let jsonData   = JSON.parse(result.data);
        
         let action   = jsonData.action;
