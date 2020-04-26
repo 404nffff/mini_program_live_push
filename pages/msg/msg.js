@@ -92,7 +92,7 @@ Page({
   onReturnBottom: function () {
     let aid = this.data.id;
     wx.redirectTo({
-      url: '/pages/login/login?id='+aid,
+      url: '/pages/index/index?scene='+aid,
     });
   }
 })

@@ -89,9 +89,9 @@ function checkLoginStatus(aid)
     ) {
     //alertMsg('请先登录', () => {
         wx.clearStorageSync();//清空缓存
-        if(path.indexOf('pages/login/login') == -1) {
+        if(path.indexOf('pages/index/index') == -1) {
           wx.redirectTo({
-            url: '/pages/login/login?id='+aid,
+            url: '/pages/index/index?scene='+aid,
           });//跳转到登录
         }
       //})
@@ -104,9 +104,9 @@ function checkLoginStatus(aid)
     alertMsg('登录凭证已过期，请重新登录', () => {
       wx.clearStorageSync();//清空缓存
 
-      if(path.indexOf('pages/login/login') == -1) {
+      if(path.indexOf('pages/index/index') == -1) {
         wx.redirectTo({
-          url: '/pages/login/login?id='+aid,
+          url: '/pages/index/index?scene='+aid,
         });//跳转到登录
       }
     })

@@ -36,6 +36,11 @@
 .item-text {
   line-height: 90rpx;
   font-size: 28rpx;
+  word-wrap: break-word;
+}
+.item-text3 {
+  font-size: 20rpx;
+  word-wrap: break-word;
 }
 
 .item-logo {

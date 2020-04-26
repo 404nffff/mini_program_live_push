@@ -51,7 +51,7 @@
 
      <van-row>
       <van-col span="5" custom-class="item-title" offset="1">推流地址</van-col>
-      <van-col span="15" custom-class='item-text'>
+      <van-col span="15" custom-class='item-text3'>
 
       {{pushUrl}}
         <!-- <van-field placeholder="rtmp://" bind:focus="{{focusPush}}" bind:input='onPushInputTap' bind:change="onPushInputChange" value="" border="{{ false }}" autosize /> -->

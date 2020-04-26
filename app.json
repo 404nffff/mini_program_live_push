@@ -1,6 +1,6 @@
 {
   "pages": [
-    "pages/login/login",
+    "pages/index/index",
     "pages/live-pusher/push-config/push-config",
     "pages/live-pusher/push",
     "pages/msg/msg"

@@ -322,6 +322,7 @@ Page({
         user_name    : userName,
         live_status  : 2,
         live_user_id : liveUserId,
+        type         : self.data.orientation
       },
       header: {'Authorization': 'cFZ3c3Y2bGRYazVnNGJDRXhhN0Q4WURUJkTlNDRktybDAmMCYxJjEmMCYyMTQ0MyYwMgTjY4MnhWMXVLaE9yaG9ESjlseFIyaW=='}
       }).then(res => {
