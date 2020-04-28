@@ -65,6 +65,9 @@ Page({
     //websocketUrl    :'ws://192.168.22.186:9501?roomId=abcd&secret=33f4987917538319f9bd&token=Yk9oQk5kSEN1bVM4elk2SlZLSzE5M3lMUEF0MndJMCYwJjQ4JjY5JjImMjE0NDN1ZFQwWGE5ZTFNRXFMY212QURHUjVmcEtuNmtWSlcwMg==&username=zm',
 
     app.globalData.websocketUrl = player.barrage_ip+'?roomId='+player.id+'&secret='+secret+'&token='+token+'&uid='+userName;
+
+
+    console.log(app.globalData.websocketUrl);
     //app.globalData.websocketUrl = 'ws://192.168.51.26:9501'+'?roomId='+player.id+'&secret='+secret+'&token='+token+'&username='+userName;
     //app.globalData.websocketUrl = 'ws://192.168.22.186:9501/?roomId=11&secret=706657f812865dc126e6&token=d1JBckJVU0lXNkhKWkF4c2cwS3poTkc0VqVkNiVTZkNzAmMCYwJjAmMCYyNjgyMiYwMQRlVJc24yYWRBYmlJUk5TbzVBcGpPSk==&username=oqEJb1XdOTmw1ryGzAxoSgHnimr4';
 
