@@ -38,29 +38,25 @@
     </van-row>
 
     
-     <van-row>
-      <van-col span="5" custom-class="item-title" offset="1">直播时间</van-col>
-      <van-col span="15" custom-class='item-text'>
-       {{liveTime}}
-      </van-col>
-      <van-col span="3" custom-class='item'>
-         
-      </van-col>
-      <van-col span="23" offset="1"><view class="line"></view></van-col>
-    </van-row>
+    <van-cell is-link bind:click="bindliveTimeBoxShow">
+      <view slot="title">
+        <view class="van-cell-text" style="float: left;">直播时间</view>
+        <text style="margin-left: 40rpx;"> {{liveTimeLabel}}</text>
+      </view>
+    </van-cell>
 
-     <van-row>
+     <!-- <van-row>
       <van-col span="5" custom-class="item-title" offset="1">推流地址</van-col>
-      <van-col span="15" custom-class='item-text3'>
+      <van-col span="15" custom-class='item-text3'> -->
 
-      {{pushUrl}}
+      <!-- {{pushUrl}} -->
         <!-- <van-field placeholder="rtmp://" bind:focus="{{focusPush}}" bind:input='onPushInputTap' bind:change="onPushInputChange" value="" border="{{ false }}" autosize /> -->
-      </van-col>
+      <!-- </van-col> -->
       <!-- <van-col span="3" custom-class='item'>
           <image class='item-image' bindtap="onCopyPushUrl" src='/pages/Resources/copy.png'></image>
       </van-col> -->
-      <van-col span="23" offset="1"><view class="line"></view></van-col>
-    </van-row>
+      <!-- <van-col span="23" offset="1"><view class="line"></view></van-col>
+    </van-row> -->
 
      <!-- <van-row>
       <van-col span="4" custom-class="item-title" offset="1">播放地址</van-col>
@@ -112,6 +108,15 @@
   </button>
 </view>
 
+
+
+<van-popup show="{{ liveTimeBoxShow }}" position="bottom" bind:close="bindliveTimeBoxClose">
+  
+  <van-picker default-index="{{ liveTimeSelected }}" show-toolbar  title="请选择直播时间" columns="{{ liveTimeColumns }}" bind:cancel="bindliveTimeBoxClose"  bind:confirm="bindliveTimeConfirm"/>
+</van-popup>
+
+
 <van-toast id="van-toast" />
+
 <!-- 
 <cover-image class='close' style="top:{{(headerHeight + statusBarHeight) - 26}}rpx" src="/pages/Resources/back.png" bindtap="onBack"></cover-image> -->

@@ -34,7 +34,11 @@ Page({
     shopName:'',
     activityName:'',
     liveTime:'',
-    display:'none'
+    display:'block',
+    liveTimeBoxShow: false,
+    liveTimeColumns: ['0', '1', '2'],
+    liveTimeLabel:'',
+    liveTimeSelected:0,
   },
 
   /**
@@ -83,56 +87,56 @@ Page({
       header: {'Authorization': 'cFZ3c3Y2bGRYazVnNGJDRXhhN0Q4WURUJkTlNDRktybDAmMCYxJjEmMCYyMTQ0MyYwMgTjY4MnhWMXVLaE9yaG9ESjlseFIyaW=='}
       }).then(res => {
 
-        let errCode  = res.data.errCode;
-        let msg      = res.data.msg;
-        let activity = res.data.data;
-        if(errCode != '000000') {
-          return Promise.reject(msg);
-        }
-        let liveUserId = activity.live_user_id; //绑定表id 
-        let player     = activity.player; //活动数据 
+        // let errCode  = res.data.errCode;
+        // let msg      = res.data.msg;
+        // let activity = res.data.data;
+        // if(errCode != '000000') {
+        //   return Promise.reject(msg);
+        // }
+        // let liveUserId = activity.live_user_id; //绑定表id 
+        // let player     = activity.player; //活动数据 
         
-        var timestamp  = Math.round(new Date().getTime()/1000);
-        var expiration = timestamp + 604800; //七天
+        // var timestamp  = Math.round(new Date().getTime()/1000);
+        // var expiration = timestamp + 604800; //七天
 
 
 
-        wx.setStorageSync("player", player);
-        wx.setStorageSync("liveUserId", liveUserId);
+        // wx.setStorageSync("player", player);
+        // wx.setStorageSync("liveUserId", liveUserId);
 
 
-        app.globalData.roomId   = aid;
-        app.globalData.username = userName;
+        // app.globalData.roomId   = aid;
+        // app.globalData.username = userName;
         
-        self.setData({
-          shopLogo:player.player_master_logo,
-          shopName:player.player_master_name,
-          activityName:player.name,
-          liveTime:player.live_time_text,
-          pushUrl:player.rtmp_url,
-          display:'block'
-        })
+        // self.setData({
+        //   shopLogo:player.player_master_logo,
+        //   shopName:player.player_master_name,
+        //   activityName:player.name,
+        //   liveTime:player.live_time_text,
+        //   pushUrl:player.rtmp_url,
+        //   display:'block'
+        // })
         
         Toast.clear();
       }).catch(err => {
-        app.globalData.websocketUrl = '';
-        app.globalData.roomId       = '';
-        app.globalData.username     = '';
+        // app.globalData.websocketUrl = '';
+        // app.globalData.roomId       = '';
+        // app.globalData.username     = '';
 
-        wx.clearStorageSync();
+        // wx.clearStorageSync();
 
-        Toast.clear();
-        Toast({
-          type: 'fail',
-          message: err,
-          mask:true,
-          duration:2000,
-          onClose: () => {
-            wx.navigateBack({
-              delta: 1
-            })
-          }
-        });
+        // Toast.clear();
+        // Toast({
+        //   type: 'fail',
+        //   message: err,
+        //   mask:true,
+        //   duration:2000,
+        //   onClose: () => {
+        //     wx.navigateBack({
+        //       delta: 1
+        //     })
+        //   }
+        // });
       })
 
 
@@ -285,6 +289,25 @@ Page({
     wx.setClipboardData({
       data: this.data.playUrl,
     })
+  },
+  bindliveTimeBoxShow() {
+    this.setData({ liveTimeBoxShow: true });
+  },
+
+  bindliveTimeBoxClose() {
+    this.setData({ liveTimeBoxShow: false });
+  },
+  bindliveTimeConfirm(event) {
+    const { picker, value, index } = event.detail;
+
+    var that = this;
+
+    that.setData({ 
+      liveTimeLabel    : value,
+      liveTimeSelected : index
+    });
+
+    that.setData({ liveTimeBoxShow: false });
   },
   startPush : function () {
     var self = this;
