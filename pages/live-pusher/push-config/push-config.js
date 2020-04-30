@@ -390,13 +390,21 @@ Page({
         if(errCode != '000000') {
           return Promise.reject(msg);
         }
+        
+        
+
+       
+        
+        self.setData({ 
+          'tapTime' : nowTime
+        });
+
         var url = '/pages/live-pusher/push?pushUrl=' + encodeURIComponent(self.data.pushUrl) + '@'+self.data.mode+'&mode=' + self.data.mode + '&orientation=' + self.data.orientation + '&enableCamera=' + self.data.enableCamera+'&playerTimeId='+playerTimeId;
         console.log(url);
         wx.navigateTo({
           url: url
         });
-        
-        self.setData({ 'tapTime': nowTime });
+
         Toast.clear();
       }).catch(err => {
         app.globalData.websocketUrl = '';
