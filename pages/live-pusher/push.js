@@ -30,7 +30,7 @@ Page({
     headerHeight: app.globalData.headerHeight,
     statusBarHeight: app.globalData.statusBarHeight,
     danmulist: [
-      { uname: '123', text: '123', color: 'white'}
+      // { uname: '123', text: '123', color: 'white'}
     ],
     scrollTop:'0px',
     liveOnlinePeopleNum:0,
@@ -179,6 +179,7 @@ Page({
   onPushEvent: function (e) {
 
     let self = this;
+    console.log(e.detail.code);
     if (e.detail.code == -1307) {
       wx.showToast({
         title: '推流多次失败',
@@ -221,7 +222,8 @@ Page({
               user_name      : userName,
               live_status    : 3,
               live_user_id   : liveUserId,
-              live_status_id : playerTimeId,
+              live_status_id : self.data.playerTimeId,
+              token          : token
             },
             header: {'Authorization': token}
             }).then(res => {
