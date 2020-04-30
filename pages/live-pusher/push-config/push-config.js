@@ -34,11 +34,13 @@ Page({
     shopName:'',
     activityName:'',
     liveTime:'',
-    display:'block',
+    display:'none',
     liveTimeBoxShow: false,
-    liveTimeColumns: ['0', '1', '2'],
+    liveTimeColumns: [],
     liveTimeLabel:'',
     liveTimeSelected:0,
+    liveTimeData:[],
+    playerTimeId:0
   },
 
   /**
@@ -84,59 +86,76 @@ Page({
         id      : aid,
         unionId : userName
       },
-      header: {'Authorization': 'cFZ3c3Y2bGRYazVnNGJDRXhhN0Q4WURUJkTlNDRktybDAmMCYxJjEmMCYyMTQ0MyYwMgTjY4MnhWMXVLaE9yaG9ESjlseFIyaW=='}
+      header: {'Authorization': token}
       }).then(res => {
 
-        // let errCode  = res.data.errCode;
-        // let msg      = res.data.msg;
-        // let activity = res.data.data;
-        // if(errCode != '000000') {
-        //   return Promise.reject(msg);
-        // }
-        // let liveUserId = activity.live_user_id; //绑定表id 
-        // let player     = activity.player; //活动数据 
+        let errCode  = res.data.errCode;
+        let msg      = res.data.msg;
+        let activity = res.data.data;
+        if(errCode != '000000') {
+          return Promise.reject(msg);
+        }
+        let liveUserId = activity.live_user_id; //绑定表id 
+        let player     = activity.player; //活动数据 
         
-        // var timestamp  = Math.round(new Date().getTime()/1000);
-        // var expiration = timestamp + 604800; //七天
+        var timestamp  = Math.round(new Date().getTime()/1000);
+        var expiration = timestamp + 604800; //七天
 
 
 
-        // wx.setStorageSync("player", player);
-        // wx.setStorageSync("liveUserId", liveUserId);
-
-
-        // app.globalData.roomId   = aid;
-        // app.globalData.username = userName;
+        wx.setStorageSync("player", player);
         
-        // self.setData({
-        //   shopLogo:player.player_master_logo,
-        //   shopName:player.player_master_name,
-        //   activityName:player.name,
-        //   liveTime:player.live_time_text,
-        //   pushUrl:player.rtmp_url,
-        //   display:'block'
-        // })
+        wx.setStorageSync("liveUserId", liveUserId);
+
+
+        app.globalData.roomId   = aid;
+        app.globalData.username = userName;
+
+
+        let timeArr = [];
+        let timeObj = [];
+        let keyNum  = 0;
+        player.live_time_list.forEach(e => {
+            let timeLabel = e.text;
+            let id        = e.id;
+
+            timeArr.push(timeLabel);
+
+            timeObj[keyNum] = id;
+            keyNum++;
+        });
+        
+
+        self.setData({
+          shopLogo        : player.player_master_logo,
+          shopName        : player.player_master_name,
+          activityName    : player.name,
+          pushUrl         : player.rtmp_url,
+          liveTimeColumns : timeArr,
+          liveTimeData    : timeObj,
+          display         : 'block'
+        })
         
         Toast.clear();
       }).catch(err => {
-        // app.globalData.websocketUrl = '';
-        // app.globalData.roomId       = '';
-        // app.globalData.username     = '';
+        app.globalData.websocketUrl = '';
+        app.globalData.roomId       = '';
+        app.globalData.username     = '';
 
-        // wx.clearStorageSync();
+        wx.clearStorageSync();
 
-        // Toast.clear();
-        // Toast({
-        //   type: 'fail',
-        //   message: err,
-        //   mask:true,
-        //   duration:2000,
-        //   onClose: () => {
-        //     wx.navigateBack({
-        //       delta: 1
-        //     })
-        //   }
-        // });
+        Toast.clear();
+        Toast({
+          type: 'fail',
+          message: err,
+          mask:true,
+          duration:2000,
+          onClose: () => {
+            wx.navigateBack({
+              delta: 1
+            })
+          }
+        });
       })
 
 
@@ -301,35 +320,49 @@ Page({
     const { picker, value, index } = event.detail;
 
     var that = this;
-
+  
     that.setData({ 
       liveTimeLabel    : value,
-      liveTimeSelected : index
+      liveTimeSelected : index,
+      playerTimeId     : that.data.liveTimeData[index]
     });
 
     that.setData({ liveTimeBoxShow: false });
   },
   startPush : function () {
-    var self = this;
+    var self         = this;
+    var playerTimeId = self.data.playerTimeId;
+
     // 防止两次点击操作间隔太快
     var nowTime = new Date();
     if (nowTime - this.data.tapTime < 1000) {
       return;
     }
+
+    if (playerTimeId == 0 || isNaN(playerTimeId)) {
+      Toast({
+        type: 'fail',
+        message: '请选择直播时间',
+        mask:true,
+        duration:2000
+      });
+      return;
+    }
+
     Toast.loading({
       mask: true,
       message: '加载中...',
       duration:0
     });
 
-    // if (!self.data.pushUrl || self.data.pushUrl.indexOf("rtmp://") != 0) {
-    //   wx.showModal({
-    //     title: '提示',
-    //     content: '推流地址不合法，请点击自动生成按钮先获取腾讯云推流地址',
-    //     showCancel: false
-    //   });
-    //   return;
-    // }
+    if (!self.data.pushUrl || self.data.pushUrl.indexOf("rtmp://") != 0) {
+      wx.showModal({
+        title: '提示',
+        content: '推流地址不合法',
+        showCancel: false
+      });
+      return;
+    }
     let userName   = wx.getStorageSync("userName");
     let token      = wx.getStorageSync("token");
     let sercet     = wx.getStorageSync("sercet");
@@ -337,17 +370,18 @@ Page({
     let liveUserId = wx.getStorageSync("liveUserId");
     let aid        = player.id;
 
-    //console.log(config.api.startLive);
     wxRequest({
       url: config.api.changeLiveStatus, 
       data: {
-        player_id    : aid,
-        user_name    : userName,
-        live_status  : 2,
-        live_user_id : liveUserId,
-        type         : self.data.orientation
+        player_id      : aid,
+        user_name      : userName,
+        live_status    : 2,
+        live_user_id   : liveUserId,
+        type           : self.data.orientation,
+        live_status_id : playerTimeId,
+        token          : token
       },
-      header: {'Authorization': 'cFZ3c3Y2bGRYazVnNGJDRXhhN0Q4WURUJkTlNDRktybDAmMCYxJjEmMCYyMTQ0MyYwMgTjY4MnhWMXVLaE9yaG9ESjlseFIyaW=='}
+      header: {'Authorization': token}
       }).then(res => {
 
         let errCode  = res.data.errCode;
@@ -356,7 +390,7 @@ Page({
         if(errCode != '000000') {
           return Promise.reject(msg);
         }
-        var url = '/pages/live-pusher/push?pushUrl=' + encodeURIComponent(self.data.pushUrl) + '@'+self.data.mode+'&mode=' + self.data.mode + '&orientation=' + self.data.orientation + '&enableCamera=' + self.data.enableCamera;
+        var url = '/pages/live-pusher/push?pushUrl=' + encodeURIComponent(self.data.pushUrl) + '@'+self.data.mode+'&mode=' + self.data.mode + '&orientation=' + self.data.orientation + '&enableCamera=' + self.data.enableCamera+'&playerTimeId='+playerTimeId;
         console.log(url);
         wx.navigateTo({
           url: url
@@ -396,6 +430,7 @@ Page({
       let userName   = wx.getStorageSync("userName");
       let liveUserId = wx.getStorageSync("liveUserId");
       let player     = wx.getStorageSync("player");
+      let token      = wx.getStorageSync("token");
       let aid        = player.id;
       wxRequest({
         url: config.api.LivebindCancel, 
@@ -403,7 +438,7 @@ Page({
           id      : liveUserId,
           unionId : userName
         },
-        header: {'Authorization': 'cFZ3c3Y2bGRYazVnNGJDRXhhN0Q4WURUJkTlNDRktybDAmMCYxJjEmMCYyMTQ0MyYwMgTjY4MnhWMXVLaE9yaG9ESjlseFIyaW=='}
+        header: {'Authorization': token}
         }).then(res => {
   
           let errCode  = res.data.errCode;

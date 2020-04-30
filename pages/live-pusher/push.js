@@ -36,6 +36,7 @@ Page({
     liveOnlinePeopleNum:0,
     shopLogo:'',
     activityName:'',
+    playerTimeId:0
   },
   /**
    * 生命周期函数--监听页面加载
@@ -59,7 +60,8 @@ Page({
       pushUrl: decodeURIComponent(options.pushUrl),
       shopLogo:player.player_master_logo,
       activityName:player.name,
-      liveOnlinePeopleNum:player.virtual_watch_num
+      liveOnlinePeopleNum:player.virtual_watch_num,
+      playerTimeId:options.playerTimeId
     });
 
     //websocketUrl    :'ws://192.168.22.186:9501?roomId=abcd&secret=33f4987917538319f9bd&token=Yk9oQk5kSEN1bVM4elk2SlZLSzE5M3lMUEF0MndJMCYwJjQ4JjY5JjImMjE0NDN1ZFQwWGE5ZTFNRXFMY212QURHUjVmcEtuNmtWSlcwMg==&username=zm',
@@ -215,12 +217,13 @@ Page({
           wxRequest({
             url: config.api.changeLiveStatus, 
             data: {
-              player_id    : aid,
-              user_name    : userName,
-              live_status  : 3,
-              live_user_id : liveUserId,
+              player_id      : aid,
+              user_name      : userName,
+              live_status    : 3,
+              live_user_id   : liveUserId,
+              live_status_id : playerTimeId,
             },
-            header: {'Authorization': 'cFZ3c3Y2bGRYazVnNGJDRXhhN0Q4WURUJkTlNDRktybDAmMCYxJjEmMCYyMTQ0MyYwMgTjY4MnhWMXVLaE9yaG9ESjlseFIyaW=='}
+            header: {'Authorization': token}
             }).then(res => {
       
               let errCode  = res.data.errCode;
