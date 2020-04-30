@@ -84,7 +84,8 @@ Page({
       url: config.api.bindLive, 
       data: {
         id      : aid,
-        unionId : userName
+        unionId : userName,
+        token   : token
       },
       header: {'Authorization': token}
       }).then(res => {
@@ -390,17 +391,10 @@ Page({
         if(errCode != '000000') {
           return Promise.reject(msg);
         }
-        
-        
-
-       
-        
-        self.setData({ 
-          'tapTime' : nowTime
-        });
-
-        var url = '/pages/live-pusher/push?pushUrl=' + encodeURIComponent(self.data.pushUrl) + '@'+self.data.mode+'&mode=' + self.data.mode + '&orientation=' + self.data.orientation + '&enableCamera=' + self.data.enableCamera+'&playerTimeId='+playerTimeId;
-        console.log(url);
+//         var url = '/pages/live-pusher/push?pushUrl=' + encodeURIComponent(self.data.pushUrl) + '&mode=' + self.data.mode + '&orientation=' + self.data.orientation + '&enableCamera=' + self.data.enableCamera;
+// //     console.log(url);
+        var url = '/pages/live-pusher/push?pushUrl=' + encodeURIComponent(self.data.pushUrl)+'&mode=' + self.data.mode + '&orientation=' + self.data.orientation + '&enableCamera=' + self.data.enableCamera+'&playerTimeId='+playerTimeId;
+        // console.log(url);
         wx.navigateTo({
           url: url
         });
